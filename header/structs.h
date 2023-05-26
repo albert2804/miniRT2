@@ -37,11 +37,15 @@ typedef struct s_ray
 //OBSTACLES
 //=============================================================================
 
+/**
+ * @param n_max represents the total number of planes, spheres, cylinders
+*/
 typedef struct s_plane
 {
 	t_vector	position;
 	t_vector	normal;
 	t_color		color;
+	bool		exist;
 }			t_plane;
 
 typedef struct s_sphere
@@ -49,6 +53,7 @@ typedef struct s_sphere
 	t_vector	centre;
 	double		radius;
 	t_color		color;
+	bool		exist;
 }			t_sphere;
 
 typedef struct s_cylinder
@@ -58,13 +63,15 @@ typedef struct s_cylinder
 	double		diameter;
 	double		height;
 	t_color		color;
-}	
+	bool		exist;
+}
 		t_cylinder;
 
 // BACKGROUND_SRTUCT		
 typedef struct s_bg
 {
 	t_color		color;
+	bool		exist;
 }			t_bg;
 
 /**
@@ -72,11 +79,12 @@ typedef struct s_bg
 */
 typedef struct s_obj
 {
-	t_plane		plane;
-	t_sphere	sphere;
-	t_cylinder	cylinder;
-	t_bg		background;
+	t_plane		*plane;
+	t_sphere	*sphere;
+	t_cylinder	*cylinder;
+	t_bg		*background;
 	t_color		*color;
+	bool		*exist;
 }			t_obj;
 
 //=============================================================================
