@@ -5,15 +5,13 @@
 # include "defines.h"
 # include "structs.h"
 
-t_vector	ft_intersection_s(t_sphere sphere, t_ray *ray); // calculates the nearest intersection point
-//TO-DO
-// t_vector	ft_intersection(t_obj obj, t_ray ray); // calculates the nearest intersection point
-// {
-// 	ft_intersection_s;
-// 	ft_intersection_c;
-// 	ft_intersection_p;
-// }
+int		ft_intersection(t_obj *obj, t_ray *ray);
+void	ft_intersection_s(t_sphere sphere, t_ray *ray, int i, int *index); // calculates the nearest intersection point
+void	ft_intersection_p(t_plane plane, t_ray *ray, int i, int *index);
 
+double	ft_intersect_plane(t_ray *r, t_plane *p);
+int		ft_dotplane(t_ray *r, t_plane *p);
+// TO-DO
 // t_vector	ft_intersection_c(t_cylinder cyl, t_ray ray); // calculates the nearest intersection point
 // t_vector	ft_intersection_p(t_plane plane, t_ray ray); // calculates the nearest intersection point
 

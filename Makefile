@@ -28,13 +28,14 @@ MLX_DIR = MLX42/
 MAKE_MLX_LIB = $(MLX_DIR)build/libmlx42.a
 INST_GLFW = /Users/$(USER)/.brew/opt/glfw/lib/
 INST_BREW = /Users/$(USER)/.brewconfig.zsh
+INST_CMAKE = /Users/$(USER)/.brew/bin/cmake
 
 all: $(NAME)
 
 %.o : %.c
 	@gcc $(C_FLAGS) -I$(HEADER_PATH) -c $^
 	
-$(NAME): $(INST_BREW) $(INST_GLFW) $(MAKE_MLX_LIB) $(LIB) $(OBJ)
+$(NAME): $(INST_BREW) $(INST_GLFW) $(INST_CMAKE) $(MAKE_MLX_LIB) $(LIB) $(OBJ)
 	@gcc $(C_FLAGS) -Ofast -o $(NAME) $(SRC) $(LIB_MLX) -I$(HEADER_PATH) -Llib -lft
 
 $(LIB):
@@ -59,7 +60,11 @@ $(INST_BREW):
 	@echo Installing Brew
 	@curl -fsSL https://rawgit.com/kube/42homebrew/master/install.sh | zsh
 	@source ~/.zshrc
-	
+
+$(INST_CMAKE):
+	@echo Installing cmake
+		brew install cmake
+
 val:
 	valgrind --leak-check=full --show-leak-kinds=all --track-origins=yes ./$(NAME)
 

@@ -6,7 +6,7 @@
 /*   By: aestraic <aestraic@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/15 14:39:26 by aestraic          #+#    #+#             */
-/*   Updated: 2023/05/23 16:02:14 by aestraic         ###   ########.fr       */
+/*   Updated: 2023/05/25 16:48:28 by aestraic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -124,7 +124,8 @@ void		send_ray(t_ray *ray, t_vector p1, t_vector p2)
 	ray->viewport = p2;
 	ray->origin = p1;
 	direction = ft_substractv(p2, p1);
-	ray->direction = ft_normalized(&direction);	
+	ray->direction = ft_normalized(&direction);
+	ray->t = T_MAX;	
 }
 
 double	ft_midnight(double a, double b, double c)
@@ -136,15 +137,17 @@ double	ft_midnight(double a, double b, double c)
 	t2 = 0;
 	if (b * b >= 4 * a * c)
 	{
-		t1 = (float)((-b + sqrt(b * b - 4 * a * c))) /(float) (2 * a);
-		t2 = (float)((-b - sqrt(b * b - 4 * a * c))) / (float)(2 * a);
+		t1 = (double)((-b + sqrt(b * b - 4 * a * c))) / (double)(2 * a);
+		t2 = (double)((-b - sqrt(b * b - 4 * a * c))) / (double)(2 * a);
+		// printf("t1: %f\t", t1);
+		// printf("t2: %f\n", t2);
 	}
 	else
 		return (-1);
 	if (t1 >= 0 && t2 >= 0 && t1 >= t2)
-		return(t1);
-	else if(t1 >= 0 && t2 >= 0 && t2 > t1)
 		return(t2);
+	else if(t1 >= 0 && t2 >= 0 && t2 > t1)
+		return(t1);
 	else if(t1 >= 0 && t2 < 0)
 		return( t1);
 	else if(t2 >= 0 && t1 < 0)

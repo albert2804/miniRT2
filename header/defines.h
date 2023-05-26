@@ -17,7 +17,6 @@
 #define CAMERA_Z 0.0f
 #define FOV 70.0f
 #define FOV_R ((float)FOV / (float)M_PI_2)
-#define FOV_R ((float)FOV / (float)M_PI_2)
 #define T_MIN 0.001f
 #define T_MAX 1.0e30f
 #define aspect_ratio ((float)WIDTH/ (float)HEIGHT)
