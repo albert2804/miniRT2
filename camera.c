@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   camera.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aestraic <aestraic@student.42.fr>          +#+  +:+       +#+        */
+/*   By: arasal <arasal@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/17 17:22:25 by aestraic          #+#    #+#             */
-/*   Updated: 2023/05/24 16:16:13 by aestraic         ###   ########.fr       */
+/*   Updated: 2023/05/28 21:43:14 by arasal           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ from the viewport z-coordinates to the camera z-coodrinates
 */
 double	distance_vp_camera(void)
 {
-	double distance;
+	double	distance;
 
 	distance = V_W / (2 * tan(FOV_R / 2));
 	return (distance);
@@ -31,18 +31,18 @@ t_viewport	*viewport_coordinates(t_alloc *allocations)
 	int			i;
 	int			j;
 	t_viewport	*vp;
-	
+
 	j = 0;
 	i = 0;
 	vp = ft_calloc(sizeof(t_viewport), 1);
 	vp->x = advanced_calloc(sizeof(double), WIDTH, (void *)&allocations->vp_x);
 	vp->y = advanced_calloc(sizeof(double), HEIGHT, (void *)&allocations->vp_y);
-	if(!vp->x || !vp->y)
+	if (!vp->x || !vp->y)
 		ft_cleanup(allocations);
 	vp->distance = distance_vp_camera();
 	while (i < WIDTH)
 	{
-		vp->x[i] = (i) * V_W / WIDTH - V_W / 2;
+		vp->x[i] = (i) * V_W / WIDTH - V_W / 2 ;
 		i++;
 	}
 	while (j < HEIGHT)
@@ -81,20 +81,20 @@ t_vector	*viewport_coord_into_points(t_viewport vp, t_alloc *alloc)
 }
 
 //makes a black background color
-t_color		background_color(void)
+t_color	background_color(void)
 {
 	t_color	color;
 
 	color.r = 0;
 	color.g = 0;
 	color.b = 0;
-	
+
 	return (color);
 }
 
 // updates the color for that ray at intersection point
 //for testing the intersection points are green
-void		calculate_color(t_ray *ray, t_obj obj)
+void	calculate_color(t_ray *ray, t_obj obj)
 {
 	ray->rgb = *obj.color;
 }

@@ -1,6 +1,8 @@
 #ifndef STRUCTS_H
 # define STRUCTS_H
 
+# include "../MLX42/include/MLX42/MLX42.h"
+
 //=============================================================================
 //RAYS AND VECTORS
 //=============================================================================
@@ -26,7 +28,7 @@ typedef struct s_color
 typedef struct s_ray
 {
 	t_vector	viewport;
-	t_vector	origin;
+	t_vector	origin_p;
 	t_vector	direction;
 	double		t;
 	int			bounces;
@@ -42,7 +44,7 @@ typedef struct s_ray
 */
 typedef struct s_plane
 {
-	t_vector	position;
+	t_vector	position_p;
 	t_vector	normal;
 	t_color		color;
 	bool		exist;
@@ -50,7 +52,7 @@ typedef struct s_plane
 
 typedef struct s_sphere
 {
-	t_vector	centre;
+	t_vector	centre_p;
 	double		radius;
 	t_color		color;
 	bool		exist;
@@ -58,9 +60,9 @@ typedef struct s_sphere
 
 typedef struct s_cylinder
 {
-	t_vector	centre;
+	t_vector	centre_p;
 	t_vector	axis_normal;
-	double		diameter;
+	double		radius;
 	double		height;
 	t_color		color;
 	bool		exist;
@@ -127,5 +129,18 @@ typedef struct s_alloc
 	double		*vp_y;
 	t_vector	*points;
 }				t_alloc;
+
+typedef struct s_struct
+{
+	mlx_t			*mlx;
+	mlx_image_t		*img;
+	t_vector		zero;
+	t_ray			*ray;
+	t_obj			*obj;
+	t_bg			bg;
+	t_viewport 		*vp;
+	t_alloc 		*allocations;
+	t_vector 		*vp_coord;
+}			t_struct;
 
 #endif

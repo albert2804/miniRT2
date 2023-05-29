@@ -11,7 +11,11 @@ SRC = 	main.c\
 		mem.c\
 		obstacle.c\
 		draw.c\
-		camera.c
+		camera.c\
+		input.c\
+		test.c\
+		get_next_line_bonus.c\
+		get_next_line_utils_bonus.c
 
 OBJ  = $(SRC:.c=.o)
 
