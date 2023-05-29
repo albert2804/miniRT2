@@ -6,7 +6,7 @@
 /*   By: aestraic <aestraic@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/16 14:36:03 by aestraic          #+#    #+#             */
-/*   Updated: 2023/05/29 13:15:14 by aestraic         ###   ########.fr       */
+/*   Updated: 2023/05/29 14:29:48 by aestraic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -478,11 +478,12 @@ int	main(int argc, char **argv)
 	t_ray		sray;
 	int			i;
 	int			obj_index;
+	int			shadow_index;
 
 	t_light L1;
-	L1.light_p.x = 0.0;
+	L1.light_p.x = 1.0;
 	L1.light_p.y = 0.0;
-	L1.light_p.z = 11.0;
+	L1.light_p.z = 0.0;
 	L1.color.r = 1.0;
 	L1.color.g = 1.0;
 	L1.color.b = 1.0;
@@ -494,6 +495,7 @@ int	main(int argc, char **argv)
 	mlx_image_to_window(mrt.mlx, mrt.img, 0, 0);
 	i = 0;
 	obj_index = 0;
+	shadow_index = 0;
 	(void) sray;
 	while (i < (WIDTH * HEIGHT))
 	{
@@ -501,11 +503,26 @@ int	main(int argc, char **argv)
 		while (ray.bounces < BOUNCES - 1)
 		{
 			ft_intersection(&ray, &mrt, &obj_index);
-			// send_shadowray(&sray, ft_calculate_point(&ray, ray.t), L1.light_p);
+			if (obj_index > 0)
+			{
+				// send_shadowray(&sray, ft_calculate_point(ray, ray.t), L1.light_p);
+				// print_ray("RAY", ray, ray.t);
+				// print_ray("SHADOW_RAY", sray, sray.t);
+				// if (ft_intersection(&sray, &mrt, &shadow_index) > 0)
+				// {
+				// 	// printf("SHADOW_INTERSECT: %d\n", shadow_index);
+				// 	ray.rgb.r = 0; 
+				// 	ray.rgb.g = 0; 
+				// 	ray.rgb.b = 0; 
+				// }
+				// else
+				// 	calculate_color(&ray, mrt.obj[obj_index]);
+			}
 			calculate_color(&ray, mrt.obj[obj_index]);
 			ray.bounces++;
 		}
 		place_pixel(&ray, mrt.img);
+		ft_putlight(L1, &mrt);
 		ray.bounces = 0;
 		i++;
 	}

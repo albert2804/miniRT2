@@ -6,7 +6,7 @@
 /*   By: aestraic <aestraic@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/14 18:17:27 by aestraic          #+#    #+#             */
-/*   Updated: 2023/05/29 13:16:09 by aestraic         ###   ########.fr       */
+/*   Updated: 2023/05/29 13:50:18 by aestraic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,9 +46,9 @@ void	ft_intersection_s(t_sphere sphere, t_ray *ray, int i, int *index) // calcul
 	O.y = 0.0f;
 	O.z = 0.0f;
 	intersect = ft_substractv(O, sphere.centre_p);
-	a = ft_dotp(&ray->direction, &ray->direction);
-	b = 2 * ft_dotp(&intersect, &ray->direction);
-	c = ft_dotp(&intersect, &intersect) - pow(sphere.radius, 2);
+	a = ft_dotp(ray->direction, ray->direction);
+	b = 2 * ft_dotp(intersect, ray->direction);
+	c = ft_dotp(intersect, intersect) - pow(sphere.radius, 2);
 	d = ft_midnight(a, b, c);
 	if (d >= T_MIN && d <= ray->t)
 	{
@@ -62,7 +62,7 @@ static double	cal_m(double t, t_cylinder cylinder, t_ray *ray, t_vector intersec
 	double	m;
 
 	m = 0;
-	m = (ft_dotp(&ray->direction, &cylinder.axis_normal) * t) + ft_dotp(&intersect, &cylinder.axis_normal);
+	m = (ft_dotp(ray->direction, cylinder.axis_normal) * t) + ft_dotp(intersect, cylinder.axis_normal);
 	if (m >= ((cylinder.height / 2) * -1) && m <= (cylinder.height / 2))
 		return (m);
 	else
@@ -82,9 +82,9 @@ void	ft_intersection_c(t_cylinder cylinder, t_ray *ray, int i, int *index) // ca
 	O.y = 0.0f;
 	O.z = 0.0f;
 	intersect = ft_substractv(O, cylinder.centre_p);
-	a = ft_dotp(&ray->direction, &ray->direction) - pow(ft_dotp(&ray->direction, &cylinder.axis_normal), 2);
-	b = 2 * (ft_dotp(&intersect, &ray->direction) - (ft_dotp(&ray->direction, &cylinder.axis_normal) * ft_dotp(&intersect, &cylinder.axis_normal)));
-	c = ft_dotp(&intersect, &intersect) - pow(ft_dotp(&intersect, &cylinder.axis_normal), 2) - pow(cylinder.radius, 2);
+	a = ft_dotp(ray->direction, ray->direction) - pow(ft_dotp(ray->direction, cylinder.axis_normal), 2);
+	b = 2 * (ft_dotp(intersect, ray->direction) - (ft_dotp(ray->direction, cylinder.axis_normal) * ft_dotp(intersect, cylinder.axis_normal)));
+	c = ft_dotp(intersect, intersect) - pow(ft_dotp(intersect, cylinder.axis_normal), 2) - pow(cylinder.radius, 2);
 	d = ft_midnight(a, b, c);
 	if (d >= 0 && d <= ray->t && cal_m(d, cylinder, ray, intersect) != -1)
 	{
@@ -95,7 +95,7 @@ void	ft_intersection_c(t_cylinder cylinder, t_ray *ray, int i, int *index) // ca
 
 int	ft_dotplane(t_ray *r, t_plane *p)
 {
-	if (ft_dotp(&r->direction, &p->normal) == 0)
+	if (ft_dotp(r->direction, p->normal) == 0)
 		return (0);
 	return (1);
 }
@@ -106,8 +106,8 @@ double	ft_intersect_plane(t_ray *r, t_plane *p)
 	t_vector	sub;
 
 	sub = ft_substractv(p->position_p, r->origin_p);
-	t = ft_dotp(&sub, &p->normal);
-	t = t / ft_dotp(&r->direction, &p->normal);
+	t = ft_dotp(sub, p->normal);
+	t = t / ft_dotp(r->direction, p->normal);
 	if (t <= T_MIN || t >= T_MAX)
 		return (0);
 	return (t);

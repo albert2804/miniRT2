@@ -6,82 +6,82 @@
 /*   By: aestraic <aestraic@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/15 14:39:26 by aestraic          #+#    #+#             */
-/*   Updated: 2023/05/29 13:15:58 by aestraic         ###   ########.fr       */
+/*   Updated: 2023/05/29 14:03:33 by aestraic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "vector.h"
 #include "obstacle.h"
 
-double	ft_amplitude(t_vector *t)
+double	ft_amplitude(t_vector t)
 {
-	return (sqrt(pow(t->x, 2) + pow(t->y, 2) + pow(t->z, 2)));
+	return (sqrt(pow(t.x, 2) + pow(t.y, 2) + pow(t.z, 2)));
 }
 
-t_vector	ft_normalized(t_vector *t)
+t_vector	ft_normalized(t_vector t)
 {
 	double		l;
 	t_vector	n;
 
 	l = ft_amplitude(t);
-	n.x = t->x / l;
-	n.y = t->y / l;
-	n.z = t->z / l;
+	n.x = t.x / l;
+	n.y = t.y / l;
+	n.z = t.z / l;
 	return (n);
 }
 
-double	ft_dotp(t_vector *v1, t_vector *v2)
+double	ft_dotp(t_vector v1, t_vector v2)
 {
-	return (v1->x * v2->x + v1->y * v2->y + v1->z * v2->z);
+	return (v1.x * v2.x + v1.y * v2.y + v1.z * v2.z);
 }
 
-t_vector	ft_crossp(t_vector *v1, t_vector *v2)
+t_vector	ft_crossp(t_vector v1, t_vector v2)
 {
 	t_vector	cp;
 
-	cp.x = v1->y * v2->z - v1->z * v2->y;
-	cp.y = v1->z * v2->x - v1->x * v2->z;
-	cp.z = v1->x * v2->y - v1->y * v2->x;
+	cp.x = v1.y * v2.z - v1.z * v2.y;
+	cp.y = v1.z * v2.x - v1.x * v2.z;
+	cp.z = v1.x * v2.y - v1.y * v2.x;
 	return (cp);
 }
 
-t_vector	ft_multiply(t_vector *t, double l)
+t_vector	ft_multiply(t_vector t, double l)
 {
 	t_vector	vect;
 
-	vect.x = t->x * l;
-	vect.y = t->y * l;
-	vect.z = t->z * l;
+	vect.x = t.x * l;
+	vect.y = t.y * l;
+	vect.z = t.z * l;
 	return (vect);
 }
 
-t_vector	ft_divide(t_vector *t, double l)
+t_vector	ft_divide(t_vector t, double l)
 {
 	t_vector	vect;
 
-	vect.x = t->x / l;
-	vect.y = t->y / l;
-	vect.z = t->z / l;
+	vect.x = t.x / l;
+	vect.y = t.y / l;
+	vect.z = t.z / l;
 	return (vect);
 }
 
-t_vector	ft_add(t_vector *t, double l)
+t_vector	ft_add(t_vector t, double l)
 {
 	t_vector	vect;
 
-	vect.x = t->x + l;
-	vect.y = t->y + l;
-	vect.z = t->z + l;
+	vect.x = t.x + l;
+	vect.y = t.y + l;
+	vect.z = t.z + l;
 	return (vect);
 }
 
-t_vector	ft_substract(t_vector *t, double l)
+t_vector	ft_substract(t_vector t, double l)
 {
 	t_vector	vect;
 
-	vect.x = t->x - l;
-	vect.y = t->y - l;
-	vect.z = t->z - l;
+	vect.x = t.x - l;
+	vect.y = t.y - l;
+	vect.z = t.z - l;
 	return (vect);
 }
 
@@ -105,15 +105,11 @@ t_vector	ft_substractv(t_vector v1, t_vector v2)
 	return (t);
 }
 
-t_vector	ft_calculate_point(t_ray *r, double t)
+t_vector	ft_calculate_point(t_ray r, double t)
 {
-	t_vector	point;
+	t_vector point;
 
-	point.x = 0;	//initalized to 0, because there is no intersection point
-	point.y = 0;	//for negative t
-	point.z = 0;
-	if (t > 0)
-		return (ft_addv(r->origin_p, ft_multiply(&r->direction, t)));
+	point = ft_addv(r.origin_p, ft_multiply(r.direction, t));
 	return (point);
 }
 
@@ -171,8 +167,8 @@ double	ft_midnight(double a, double b, double c)
 	{
 		t1 = (double)((-b + sqrt(b * b - 4 * a * c))) / (double)(2 * a);
 		t2 = (double)((-b - sqrt(b * b - 4 * a * c))) / (double)(2 * a);
-		printf("t1: %f\t", t1);
-		printf("t2: %f\n", t2);
+		// printf("t1: %f\t", t1);
+		// printf("t2: %f\n", t2);
 	}
 	else
 		return (-1);
@@ -206,10 +202,10 @@ void	print_vector(const char *str, t_vector a)
 	printf("   /%f\\\n", a.x);
 	printf("V:| %f |\n", a.y);
 	printf("   \\%f/\n", a.z);
-	printf("Amp: %f\n", ft_amplitude(&a));
+	printf("Amp: %f\n", ft_amplitude(a));
 }
 
-void print_ray(const char *str, t_ray ray, int t)
+void print_ray(const char *str, t_ray ray, double t)
 {
 	printf("=====\n");
 	printf("%s", str);
@@ -222,8 +218,10 @@ void print_ray(const char *str, t_ray ray, int t)
 	printf("   /%f\\\n", ray.direction.x);
 	printf("D:| %f |\n", ray.direction.y);
 	printf("   \\%f/\n", ray.direction.z);
+	printf("AMP: %f\n", ft_amplitude(ray.direction));
 	printf("\tPoint\n");
-	printf("   /%f\\\n", ft_calculate_point(&ray, t).x);
-	printf("P:| %f |\n", ft_calculate_point(&ray, 1).y);
-	printf("   \\%f/\n", ft_calculate_point(&ray, 1).z);
+	printf("   /%f\\\n", ft_calculate_point(ray, t).x);
+	printf("P:| %f |\n", ft_calculate_point(ray, t).y);
+	printf("   \\%f/\n", ft_calculate_point(ray, t).z);
+	printf("t: %f\n", t);
 }
