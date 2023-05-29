@@ -15,7 +15,7 @@ SRC = 	main.c\
 
 OBJ  = $(SRC:.c=.o)
 
-C_FLAGS = -Wall -Wextra -Werror
+C_FLAGS = -Wall -Wextra -Werror -Ofast
 HEADER_PATH = header
 SRC_PATH = src
 OBJ_PATH = obj
@@ -36,7 +36,7 @@ all: $(NAME)
 	@gcc $(C_FLAGS) -I$(HEADER_PATH) -c $^
 	
 $(NAME): $(INST_BREW) $(INST_GLFW) $(INST_CMAKE) $(MAKE_MLX_LIB) $(LIB) $(OBJ)
-	@gcc $(C_FLAGS) -Ofast -o $(NAME) $(SRC) $(LIB_MLX) -I$(HEADER_PATH) -Llib -lft
+	@gcc $(C_FLAGS) -o $(NAME) $(SRC) $(LIB_MLX) -I$(HEADER_PATH) -Llib -lft
 
 $(LIB):
 	@mkdir -p $(LIB_PATH)

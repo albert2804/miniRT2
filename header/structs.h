@@ -31,6 +31,7 @@ typedef struct s_ray
 	double		t;
 	int			bounces;
 	t_color		rgb;
+	bool		shadow;
 }			t_ray;
 
 //=============================================================================
@@ -52,6 +53,7 @@ typedef struct s_sphere
 {
 	t_vector	centre;
 	double		radius;
+	t_vector	normal;
 	t_color		color;
 	bool		exist;
 }			t_sphere;
@@ -112,9 +114,9 @@ typedef struct s_amb
 
 typedef struct s_light
 {
-	t_vector	*light_p;
+	t_vector	light_p;
 	double		brightness;
-	t_color		*color;
+	t_color		color;
 }			t_light;
 
 //=============================================================================
