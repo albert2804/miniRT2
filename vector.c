@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   vector.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aestraic <aestraic@student.42.fr>          +#+  +:+       +#+        */
+/*   By: arasal <arasal@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/15 14:39:26 by aestraic          #+#    #+#             */
-/*   Updated: 2023/05/25 16:48:28 by aestraic         ###   ########.fr       */
+/*   Updated: 2023/05/28 19:38:41 by arasal           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ t_vector	ft_crossp(t_vector *v1, t_vector *v2)
 
 t_vector	ft_multiply(t_vector *t, double l)
 {
-	t_vector vect;
+	t_vector	vect;
 
 	vect.x = t->x * l;
 	vect.y = t->y * l;
@@ -57,8 +57,8 @@ t_vector	ft_multiply(t_vector *t, double l)
 
 t_vector	ft_divide(t_vector *t, double l)
 {
-	t_vector vect;
-	
+	t_vector	vect;
+
 	vect.x = t->x / l;
 	vect.y = t->y / l;
 	vect.z = t->z / l;
@@ -67,8 +67,8 @@ t_vector	ft_divide(t_vector *t, double l)
 
 t_vector	ft_add(t_vector *t, double l)
 {
-	t_vector vect;
-	
+	t_vector	vect;
+
 	vect.x = t->x + l;
 	vect.y = t->y + l;
 	vect.z = t->z + l;
@@ -77,8 +77,8 @@ t_vector	ft_add(t_vector *t, double l)
 
 t_vector	ft_substract(t_vector *t, double l)
 {
-	t_vector vect;
-	
+	t_vector	vect;
+
 	vect.x = t->x - l;
 	vect.y = t->y - l;
 	vect.z = t->z - l;
@@ -107,28 +107,55 @@ t_vector	ft_substractv(t_vector v1, t_vector v2)
 
 t_vector	ft_calculate_point(t_ray *r, double t)
 {
-	t_vector point;
+	t_vector	point;
 
 	point.x = 0;	//initalized to 0, because there is no intersection point
 	point.y = 0;	//for negative t
 	point.z = 0;
 	if (t > 0)
-		return (ft_addv(r->origin, ft_multiply(&r->direction, t)));
+		return (ft_addv(r->origin_p, ft_multiply(&r->direction, t)));
 	return (point);
 }
 
-void		send_ray(t_ray *ray, t_vector p1, t_vector p2)
+void		send_ray(t_struct *mrt, int i)
 {
-	t_vector direction;
-	
-	ray->viewport = p2;
-	ray->origin = p1;
-	direction = ft_substractv(p2, p1);
-	ray->direction = ft_normalized(&direction);
-	ray->t = T_MAX;	
+	t_vector	direction;
+
+	mrt->ray->viewport = mrt->vp_coord[i];
+	mrt->ray->origin_p = mrt->zero;
+	direction = ft_substractv(mrt->vp_coord[i], mrt->zero);
+	mrt->ray->direction = ft_normalized(&direction);
+	mrt->ray->t = T_MAX;
 }
 
 double	ft_midnight(double a, double b, double c)
+{
+	double t1;
+	double t2;
+
+	t1 = 0;
+	t2 = 0;
+	if (b * b >= 4 * a * c)
+	{
+		t1 = (double)((-b + sqrt(b * b - 4 * a * c))) / (double)(2 * a);
+		t2 = (double)((-b - sqrt(b * b - 4 * a * c))) / (double)(2 * a);
+		// printf("t1: %f\t", t1);
+		// printf("t2: %f\n", t2);
+	}
+	else
+		return (-1);
+	if (t1 >= 0 && t2 >= 0 && t1 >= t2)
+		return(t2);
+	else if(t1 >= 0 && t2 >= 0 && t2 > t1)
+		return(t1);
+	else if(t1 >= 0 && t2 < 0)
+		return( t1);
+	else if(t2 >= 0 && t1 < 0)
+		return(t2);
+	return (-1);
+}
+
+double	ft_midnight2(double a, double b, double c)
 {
 	double t1;
 	double t2;
@@ -182,9 +209,9 @@ void print_ray(const char *str, t_ray ray, int t)
 	printf("%s", str);
 	printf("\n=====\n");
 	printf("\tOrigin\n");
-	printf("   /%f\\\n", ray.origin.x);
-	printf("R:| %f |\n", ray.origin.y);
-	printf("   \\%f/\n", ray.origin.z);
+	printf("   /%f\\\n", ray.origin_p.x);
+	printf("R:| %f |\n", ray.origin_p.y);
+	printf("   \\%f/\n", ray.origin_p.z);
 	printf("\tDirection\n");
 	printf("   /%f\\\n", ray.direction.x);
 	printf("D:| %f |\n", ray.direction.y);
@@ -194,4 +221,3 @@ void print_ray(const char *str, t_ray ray, int t)
 	printf("P:| %f |\n", ft_calculate_point(&ray, 1).y);
 	printf("   \\%f/\n", ft_calculate_point(&ray, 1).z);
 }
-
