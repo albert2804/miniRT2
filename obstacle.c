@@ -6,7 +6,7 @@
 /*   By: aestraic <aestraic@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/14 18:17:27 by aestraic          #+#    #+#             */
-/*   Updated: 2023/05/29 15:59:29 by aestraic         ###   ########.fr       */
+/*   Updated: 2023/05/29 18:48:35 by aestraic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ int		ft_intersection(t_ray *ray, t_struct *mrt) // calculates the nearest inters
 			ft_intersection_c(*mrt->obj[i].cylinder, ray, i, &obj_index);
 		i++;
 	}
-	printf("OBJINDEX: %d\n", obj_index);
+	// printf("OBJINDEX: %d\n", obj_index);
 	return (obj_index);
 }
 
@@ -53,12 +53,28 @@ void	ft_intersection_s(t_sphere sphere, t_ray *ray, int i, int *index) // calcul
 	b = 2 * ft_dotp(intersect, ray->direction);
 	c = ft_dotp(intersect, intersect) - pow(sphere.radius, 2);
 	d = ft_midnight(a, b, c);
-	printf("d: %f\n", d);
+	// printf("d: %f\n", d);
 	if (d >= T_MIN && d <= ray->t)
 	{
 		ray->t = d;
 		*index = i;
 	}
+}
+
+t_vector shadowray_start(t_obj *object, t_ray *ray, int obj_index)
+{
+	t_vector	new_intersect;
+	int			i;
+
+	i = obj_index;
+	new_intersect = ft_calculate_point(*ray, ray->t);
+	if (object[i].sphere)
+	{
+		new_intersect = ft_substractv(new_intersect, object[i].sphere->centre_p);
+		new_intersect = ft_multiply(new_intersect, (1 + T_MIN));
+		new_intersect = ft_addv(object[i].sphere->centre_p, new_intersect);
+	}
+	return (new_intersect);
 }
 
 static double	cal_m(double t, t_cylinder cylinder, t_ray *ray, t_vector intersect)

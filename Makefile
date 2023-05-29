@@ -19,7 +19,7 @@ SRC = 	main.c\
 
 OBJ  = $(SRC:.c=.o)
 
-C_FLAGS = -Wall -Wextra -Werror
+C_FLAGS = -g -Wall -Wextra -Werror -fsanitize=address
 HEADER_PATH = header
 SRC_PATH = src
 OBJ_PATH = obj
