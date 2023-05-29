@@ -6,7 +6,7 @@
 /*   By: aestraic <aestraic@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/15 14:39:26 by aestraic          #+#    #+#             */
-/*   Updated: 2023/05/29 14:03:33 by aestraic         ###   ########.fr       */
+/*   Updated: 2023/05/29 15:49:39 by aestraic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -149,7 +149,7 @@ void		send_shadowray(t_ray *sray, t_vector intersect_p, t_vector light_p)
 	direction = ft_substractv(light_p, intersect_p);
 	// sray->direction = ft_normalized(direction);
 	sray->direction = direction;
-	sray->t = T_MAX;
+	sray->t = 1;
 	sray->rgb.r = 0;
 	sray->rgb.g = 0;
 	sray->rgb.b = 0;
@@ -167,8 +167,8 @@ double	ft_midnight(double a, double b, double c)
 	{
 		t1 = (double)((-b + sqrt(b * b - 4 * a * c))) / (double)(2 * a);
 		t2 = (double)((-b - sqrt(b * b - 4 * a * c))) / (double)(2 * a);
-		// printf("t1: %f\t", t1);
-		// printf("t2: %f\n", t2);
+		printf("t1: %f\t", t1);
+		printf("t2: %f\n", t2);
 	}
 	else
 		return (-1);

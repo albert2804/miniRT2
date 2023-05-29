@@ -6,7 +6,7 @@
 /*   By: aestraic <aestraic@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/14 18:17:27 by aestraic          #+#    #+#             */
-/*   Updated: 2023/05/29 13:50:18 by aestraic         ###   ########.fr       */
+/*   Updated: 2023/05/29 15:59:29 by aestraic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,22 +15,25 @@
 
 //returns the index of the objectlist
 //if there is no intersection at all, the return value will be 0, which must be background
-int		ft_intersection(t_ray *ray, t_struct *mrt, int *obj_index) // calculates the nearest intersection point
+int		ft_intersection(t_ray *ray, t_struct *mrt) // calculates the nearest intersection point
 {
 	int			i;
-
+	int			obj_index;
+	
 	i = 0;
+	obj_index = 0;
 	while (mrt->obj[i].exist)
 	{
 		if (mrt->obj[i].sphere)
-			ft_intersection_s(*mrt->obj[i].sphere, ray, i, obj_index);
+			ft_intersection_s(*mrt->obj[i].sphere, ray, i, &obj_index);
 		if (mrt->obj[i].plane)
-			ft_intersection_p(*mrt->obj[i].plane, ray, i, obj_index);
+			ft_intersection_p(*mrt->obj[i].plane, ray, i, &obj_index);
 		if (mrt->obj[i].cylinder)
-			ft_intersection_c(*mrt->obj[i].cylinder, ray, i, obj_index);
+			ft_intersection_c(*mrt->obj[i].cylinder, ray, i, &obj_index);
 		i++;
 	}
-	return (*obj_index);
+	printf("OBJINDEX: %d\n", obj_index);
+	return (obj_index);
 }
 
 void	ft_intersection_s(t_sphere sphere, t_ray *ray, int i, int *index) // calculates the nearest intersection point
@@ -50,6 +53,7 @@ void	ft_intersection_s(t_sphere sphere, t_ray *ray, int i, int *index) // calcul
 	b = 2 * ft_dotp(intersect, ray->direction);
 	c = ft_dotp(intersect, intersect) - pow(sphere.radius, 2);
 	d = ft_midnight(a, b, c);
+	printf("d: %f\n", d);
 	if (d >= T_MIN && d <= ray->t)
 	{
 		ray->t = d;

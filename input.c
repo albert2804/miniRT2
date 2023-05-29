@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   input.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: arasal <arasal@student.42heilbronn.de>     +#+  +:+       +#+        */
+/*   By: aestraic <aestraic@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/09 17:02:27 by arasal            #+#    #+#             */
-/*   Updated: 2023/05/28 18:36:12 by arasal           ###   ########.fr       */
+/*   Updated: 2023/05/29 14:54:43 by aestraic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -121,7 +121,7 @@ void	ft_input(t_struct *mrt, char **argv)
 	char		*str;
 	char		**split;
 
-	index = 0;
+	index = 1;
 	fd = open(argv[1], O_RDONLY);
 	str = get_next_line(fd);
 	while (str)
