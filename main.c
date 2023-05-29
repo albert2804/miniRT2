@@ -6,7 +6,7 @@
 /*   By: aestraic <aestraic@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/16 14:36:03 by aestraic          #+#    #+#             */
-/*   Updated: 2023/05/29 18:53:42 by aestraic         ###   ########.fr       */
+/*   Updated: 2023/05/29 19:26:25 by aestraic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -480,9 +480,9 @@ int	main(int argc, char **argv)
 	int 		obj_index;
 
 	t_light L1;
-	L1.light_p.x = 0.0;
-	L1.light_p.y = 0.0;
-	L1.light_p.z = 7.0;
+	L1.light_p.x = -1.0;
+	L1.light_p.y = 1.0;
+	L1.light_p.z = 6.0;
 	L1.color.r = 1.0;
 	L1.color.g = 1.0;
 	L1.color.b = 1.0;
@@ -505,17 +505,17 @@ int	main(int argc, char **argv)
 			{
 				t_vector new_intersect;
 				new_intersect = shadowray_start(mrt.obj, &ray, obj_index);
-				// send_shadowray(&sray, new_intersect, L1.light_p);
-				send_shadowray(&sray, ft_calculate_point(ray, ray.t), L1.light_p);
+				send_shadowray(&sray, new_intersect, L1.light_p);
+				// send_shadowray(&sray, ft_calculate_point(ray, ray.t), L1.light_p);
 				// printf("T_SHADOW: %f", sray.t);
-				print_ray("SHADOW_RAY", sray, sray.t);
+				// print_ray("SHADOW_RAY", sray, sray.t);
+				// print_vector("INTERSECTION", new_intersect);
 				if (ft_intersection(&sray, &mrt) > 0)
 				{
 					// printf("SHADOW_INTERSECT: %d\n");
-					print_vector("INTERSECTION", new_intersect);
 					ray.rgb.r = 0; 
 					ray.rgb.g = 0; 
-					ray.rgb.b = 0; 
+					ray.rgb.b = 0;
 				}
 				else
 					calculate_color(&ray, mrt.obj[obj_index]);

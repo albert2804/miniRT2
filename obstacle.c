@@ -6,7 +6,7 @@
 /*   By: aestraic <aestraic@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/14 18:17:27 by aestraic          #+#    #+#             */
-/*   Updated: 2023/05/29 18:48:35 by aestraic         ###   ########.fr       */
+/*   Updated: 2023/05/29 19:25:31 by aestraic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,22 +38,17 @@ int		ft_intersection(t_ray *ray, t_struct *mrt) // calculates the nearest inters
 
 void	ft_intersection_s(t_sphere sphere, t_ray *ray, int i, int *index) // calculates the nearest intersection point
 {
-	t_vector	O;
 	t_vector	intersect;
 	double		a;
 	double		b;
 	double		c;
 	double		d;
 
-	O.x = 0.0f;
-	O.y = 0.0f;
-	O.z = 0.0f;
-	intersect = ft_substractv(O, sphere.centre_p);
+	intersect = ft_substractv(ray->origin_p, sphere.centre_p);
 	a = ft_dotp(ray->direction, ray->direction);
 	b = 2 * ft_dotp(intersect, ray->direction);
 	c = ft_dotp(intersect, intersect) - pow(sphere.radius, 2);
 	d = ft_midnight(a, b, c);
-	// printf("d: %f\n", d);
 	if (d >= T_MIN && d <= ray->t)
 	{
 		ray->t = d;

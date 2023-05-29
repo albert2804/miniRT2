@@ -6,7 +6,7 @@
 /*   By: aestraic <aestraic@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/15 14:39:26 by aestraic          #+#    #+#             */
-/*   Updated: 2023/05/29 18:50:02 by aestraic         ###   ########.fr       */
+/*   Updated: 2023/05/29 19:11:42 by aestraic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -214,6 +214,7 @@ void print_ray(const char *str, t_ray ray, double t)
 	printf("   /%f\\\n", ray.origin_p.x);
 	printf("R:| %f |\n", ray.origin_p.y);
 	printf("   \\%f/\n", ray.origin_p.z);
+	printf("AMP: %f\n", ft_amplitude(ray.origin_p));
 	printf("\tDirection\n");
 	printf("   /%f\\\n", ray.direction.x);
 	printf("D:| %f |\n", ray.direction.y);
