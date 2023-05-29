@@ -6,7 +6,7 @@
 /*   By: aestraic <aestraic@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/15 14:39:26 by aestraic          #+#    #+#             */
-/*   Updated: 2023/05/29 12:34:31 by aestraic         ###   ########.fr       */
+/*   Updated: 2023/05/29 13:15:58 by aestraic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -117,22 +117,39 @@ t_vector	ft_calculate_point(t_ray *r, double t)
 	return (point);
 }
 
-void		send_ray(t_struct *mrt, int i)
-{
-	t_vector	direction;
+// void		send_ray(t_struct *mrt, int i)
+// {
+// 	t_vector	direction;
 
-	mrt->ray->viewport = mrt->vp_coord[i];
-	mrt->ray->origin_p = mrt->zero;
-	direction = ft_substractv(mrt->vp_coord[i], mrt->zero);
-	mrt->ray->direction = ft_normalized(&direction);
-	mrt->ray->t = T_MAX;
+// 	mrt->ray->viewport = mrt->vp_coord[i];
+// 	mrt->ray->origin_p = mrt->zero;
+// 	direction = ft_substractv(mrt->vp_coord[i], mrt->zero);
+// 	mrt->ray->direction = ft_normalized(&direction);
+// 	mrt->ray->t = T_MAX;
+// }
+
+void		send_ray(t_ray *ray, t_vector p1, t_vector p2)
+{
+	t_vector direction;
+	
+	ray->viewport = p2;
+	ray->origin_p = p1;
+	direction = ft_substractv(p2, p1);
+	// ray->direction = ft_normalized(direction);
+	ray->direction = direction;
+	ray->t = T_MAX;
+	ray->rgb.r = 0;
+	ray->rgb.g = 0;
+	ray->rgb.b = 0;
+	ray->bounces = 0;
+	ray->shadow = false;
 }
 
 void		send_shadowray(t_ray *sray, t_vector intersect_p, t_vector light_p)
 {
 	t_vector direction;
 	
-	sray->origin = intersect_p;
+	sray->origin_p = intersect_p;
 	direction = ft_substractv(light_p, intersect_p);
 	// sray->direction = ft_normalized(direction);
 	sray->direction = direction;
@@ -169,6 +186,7 @@ double	ft_midnight(double a, double b, double c)
 		return(t2);
 	return (-1);
 }
+
 
 t_vector	vec_from_points(t_vector point1, t_vector point2)
 {

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: arasal <arasal@student.42heilbronn.de>     +#+  +:+       +#+        */
+/*   By: aestraic <aestraic@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/16 14:36:03 by aestraic          #+#    #+#             */
-/*   Updated: 2023/05/28 16:42:37 by arasal           ###   ########.fr       */
+/*   Updated: 2023/05/29 13:15:14 by aestraic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -474,26 +474,39 @@ static void	ft_init(t_struct *mrt, char **argv)
 int	main(int argc, char **argv)
 {
 	t_struct	mrt;
+	t_ray		ray;
+	t_ray		sray;
 	int			i;
 	int			obj_index;
 
+	t_light L1;
+	L1.light_p.x = 0.0;
+	L1.light_p.y = 0.0;
+	L1.light_p.z = 11.0;
+	L1.color.r = 1.0;
+	L1.color.g = 1.0;
+	L1.color.b = 1.0;
+	L1.brightness = 1.0;
+	
 	if (argc != 2)
 		return (1);
 	ft_init(&mrt, argv);
 	mlx_image_to_window(mrt.mlx, mrt.img, 0, 0);
 	i = 0;
 	obj_index = 0;
+	(void) sray;
 	while (i < (WIDTH * HEIGHT))
 	{
-		send_ray(&mrt, i);
-		while (mrt.ray->bounces < BOUNCES - 1)
+		send_ray(&ray, mrt.zero, mrt.vp_coord[i]);
+		while (ray.bounces < BOUNCES - 1)
 		{
-			ft_intersection(&mrt, &obj_index);
-			calculate_color(mrt.ray, mrt.obj[obj_index]);
-			mrt.ray->bounces++;
+			ft_intersection(&ray, &mrt, &obj_index);
+			// send_shadowray(&sray, ft_calculate_point(&ray, ray.t), L1.light_p);
+			calculate_color(&ray, mrt.obj[obj_index]);
+			ray.bounces++;
 		}
-		place_pixel(mrt.ray, mrt.img);
-		mrt.ray->bounces = 0;
+		place_pixel(&ray, mrt.img);
+		ray.bounces = 0;
 		i++;
 	}
 	mlx_loop(mrt.mlx);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   obstacle.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: arasal <arasal@student.42heilbronn.de>     +#+  +:+       +#+        */
+/*   By: aestraic <aestraic@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/14 18:17:27 by aestraic          #+#    #+#             */
-/*   Updated: 2023/05/28 20:11:19 by arasal           ###   ########.fr       */
+/*   Updated: 2023/05/29 13:16:09 by aestraic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,20 +15,19 @@
 
 //returns the index of the objectlist
 //if there is no intersection at all, the return value will be 0, which must be background
-int		ft_intersection(t_struct *mrt, int *obj_index) // calculates the nearest intersection point
+int		ft_intersection(t_ray *ray, t_struct *mrt, int *obj_index) // calculates the nearest intersection point
 {
 	int			i;
 
 	i = 0;
-	mrt->ray->t = T_MAX;
 	while (mrt->obj[i].exist)
 	{
 		if (mrt->obj[i].sphere)
-			ft_intersection_s(*mrt->obj[i].sphere, mrt->ray, i, obj_index);
+			ft_intersection_s(*mrt->obj[i].sphere, ray, i, obj_index);
 		if (mrt->obj[i].plane)
-			ft_intersection_p(*mrt->obj[i].plane, mrt->ray, i, obj_index);
+			ft_intersection_p(*mrt->obj[i].plane, ray, i, obj_index);
 		if (mrt->obj[i].cylinder)
-			ft_intersection_c(*mrt->obj[i].cylinder, mrt->ray, i, obj_index);
+			ft_intersection_c(*mrt->obj[i].cylinder, ray, i, obj_index);
 		i++;
 	}
 	return (*obj_index);
@@ -86,7 +85,7 @@ void	ft_intersection_c(t_cylinder cylinder, t_ray *ray, int i, int *index) // ca
 	a = ft_dotp(&ray->direction, &ray->direction) - pow(ft_dotp(&ray->direction, &cylinder.axis_normal), 2);
 	b = 2 * (ft_dotp(&intersect, &ray->direction) - (ft_dotp(&ray->direction, &cylinder.axis_normal) * ft_dotp(&intersect, &cylinder.axis_normal)));
 	c = ft_dotp(&intersect, &intersect) - pow(ft_dotp(&intersect, &cylinder.axis_normal), 2) - pow(cylinder.radius, 2);
-	d = ft_midnight2(a, b, c);
+	d = ft_midnight(a, b, c);
 	if (d >= 0 && d <= ray->t && cal_m(d, cylinder, ray, intersect) != -1)
 	{
 		ray->t = d;

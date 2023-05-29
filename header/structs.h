@@ -33,6 +33,7 @@ typedef struct s_ray
 	double		t;
 	int			bounces;
 	t_color		rgb;
+	bool		shadow;
 }			t_ray;
 
 //=============================================================================
@@ -109,14 +110,14 @@ typedef struct s_viewport
 typedef struct s_amb
 {
 	double		amb_ratio;
-	t_color		*color;
+	t_color		color;
 }			t_amb;
 
 typedef struct s_light
 {
-	t_vector	*light_p;
+	t_vector	light_p;
 	double		brightness;
-	t_color		*color;
+	t_color		color;
 }			t_light;
 
 //=============================================================================
