@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   vector.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: arasal <arasal@student.42heilbronn.de>     +#+  +:+       +#+        */
+/*   By: aestraic <aestraic@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/15 14:39:26 by aestraic          #+#    #+#             */
-/*   Updated: 2023/05/28 19:38:41 by arasal           ###   ########.fr       */
+/*   Updated: 2023/05/29 12:34:31 by aestraic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -128,56 +128,44 @@ void		send_ray(t_struct *mrt, int i)
 	mrt->ray->t = T_MAX;
 }
 
+void		send_shadowray(t_ray *sray, t_vector intersect_p, t_vector light_p)
+{
+	t_vector direction;
+	
+	sray->origin = intersect_p;
+	direction = ft_substractv(light_p, intersect_p);
+	// sray->direction = ft_normalized(direction);
+	sray->direction = direction;
+	sray->t = T_MAX;
+	sray->rgb.r = 0;
+	sray->rgb.g = 0;
+	sray->rgb.b = 0;
+	sray->shadow = true;
+}
+
 double	ft_midnight(double a, double b, double c)
 {
 	double t1;
 	double t2;
 
-	t1 = 0;
-	t2 = 0;
+	t1 = 0.0;
+	t2 = 0.0;
 	if (b * b >= 4 * a * c)
 	{
 		t1 = (double)((-b + sqrt(b * b - 4 * a * c))) / (double)(2 * a);
 		t2 = (double)((-b - sqrt(b * b - 4 * a * c))) / (double)(2 * a);
-		// printf("t1: %f\t", t1);
-		// printf("t2: %f\n", t2);
+		printf("t1: %f\t", t1);
+		printf("t2: %f\n", t2);
 	}
 	else
 		return (-1);
-	if (t1 >= 0 && t2 >= 0 && t1 >= t2)
+	if (t1 >= T_MIN && t2 >= T_MIN && t1 >= t2)
 		return(t2);
-	else if(t1 >= 0 && t2 >= 0 && t2 > t1)
+	else if(t1 >= T_MIN && t2 >= T_MIN && t2 >= t1)
 		return(t1);
-	else if(t1 >= 0 && t2 < 0)
-		return( t1);
-	else if(t2 >= 0 && t1 < 0)
-		return(t2);
-	return (-1);
-}
-
-double	ft_midnight2(double a, double b, double c)
-{
-	double t1;
-	double t2;
-
-	t1 = 0;
-	t2 = 0;
-	if (b * b >= 4 * a * c)
-	{
-		t1 = (double)((-b + sqrt(b * b - 4 * a * c))) / (double)(2 * a);
-		t2 = (double)((-b - sqrt(b * b - 4 * a * c))) / (double)(2 * a);
-		// printf("t1: %f\t", t1);
-		// printf("t2: %f\n", t2);
-	}
-	else
-		return (-1);
-	if (t1 >= 0 && t2 >= 0 && t1 >= t2)
-		return(t2);
-	else if(t1 >= 0 && t2 >= 0 && t2 > t1)
+	else if(t1 >= T_MIN && t2 < T_MIN)
 		return(t1);
-	else if(t1 >= 0 && t2 < 0)
-		return( t1);
-	else if(t2 >= 0 && t1 < 0)
+	else if(t2 >= T_MIN && t1 < T_MIN)
 		return(t2);
 	return (-1);
 }
