@@ -6,7 +6,7 @@
 /*   By: aestraic <aestraic@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/09 17:02:27 by arasal            #+#    #+#             */
-/*   Updated: 2023/05/30 15:02:56 by aestraic         ###   ########.fr       */
+/*   Updated: 2023/05/30 16:27:02 by aestraic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -123,7 +123,7 @@ void create_light(t_struct *mrt)
 	mrt->light.color.b = 1.0;
 	mrt->light.light_p.x = 0.0;
 	mrt->light.light_p.y = 0.0;
-	mrt->light.light_p.z = 50.0;
+	mrt->light.light_p.z = 2.0;
 }
 
 //Ambient Lighing

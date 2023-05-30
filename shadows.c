@@ -6,7 +6,7 @@
 /*   By: aestraic <aestraic@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/30 11:21:23 by aestraic          #+#    #+#             */
-/*   Updated: 2023/05/30 15:03:19 by aestraic         ###   ########.fr       */
+/*   Updated: 2023/05/30 16:37:27 by aestraic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,10 @@ void		send_ray(t_ray *ray, t_vector p1, t_vector p2)
 	ray->viewport = p2;
 	ray->origin_p = p1;
 	direction = ft_substractv(p2, p1);
+	int angle = 20;
+	double angle_rad = angle / M_PI;
+	direction.x +=direction.x + sin(angle_rad) * (FOV / 40);
+	direction.y +=direction.y + 0.0;
 	// ray->direction = ft_normalized(direction);
 	ray->direction = direction;
 	ray->t = T_MAX;
