@@ -2,5 +2,7 @@
 miniRT
 /lib/
 miniRT.dSYM
-text
+text/
+*.txt
 MLX42
+.vscode
