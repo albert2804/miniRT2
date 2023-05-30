@@ -6,7 +6,7 @@
 /*   By: aestraic <aestraic@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/16 14:36:03 by aestraic          #+#    #+#             */
-/*   Updated: 2023/05/29 19:26:25 by aestraic         ###   ########.fr       */
+/*   Updated: 2023/05/30 14:55:52 by aestraic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -464,7 +464,6 @@ static void	ft_init(t_struct *mrt, char **argv)
 	mrt->obj[0].exist = &mrt->bg.exist;
 	ft_input(mrt, argv);
 	mrt->allocations = ft_calloc(sizeof(t_alloc), 1);
-	mrt->ray = malloc(sizeof(t_ray));
 	mrt->vp = viewport_coordinates(mrt->allocations);
 	mrt->vp_coord = viewport_coord_into_points(*mrt->vp, mrt->allocations);
 	mrt->mlx = mlx_init(WIDTH, HEIGHT, "MLX42", true);
@@ -479,18 +478,11 @@ int	main(int argc, char **argv)
 	int			i;
 	int 		obj_index;
 
-	t_light L1;
-	L1.light_p.x = -1.0;
-	L1.light_p.y = 1.0;
-	L1.light_p.z = 6.0;
-	L1.color.r = 1.0;
-	L1.color.g = 1.0;
-	L1.color.b = 1.0;
-	L1.brightness = 1.0;
-	
 	if (argc != 2)
 		return (1);
 	ft_init(&mrt, argv);
+	init_ray(&ray, 0);
+	init_ray(&sray, 1);
 	mlx_image_to_window(mrt.mlx, mrt.img, 0, 0);
 	i = 0;
 	obj_index = 0;
@@ -498,34 +490,22 @@ int	main(int argc, char **argv)
 	while (i < (WIDTH * HEIGHT))
 	{
 		send_ray(&ray, mrt.zero, mrt.vp_coord[i]);
-		while (ray.bounces < BOUNCES - 1)
+		while (ray.bounces < BOUNCES)
 		{
 			obj_index = ft_intersection(&ray, &mrt);
 			if (obj_index > 0)
 			{
-				t_vector new_intersect;
-				new_intersect = shadowray_start(mrt.obj, &ray, obj_index);
-				send_shadowray(&sray, new_intersect, L1.light_p);
-				// send_shadowray(&sray, ft_calculate_point(ray, ray.t), L1.light_p);
-				// printf("T_SHADOW: %f", sray.t);
-				// print_ray("SHADOW_RAY", sray, sray.t);
-				// print_vector("INTERSECTION", new_intersect);
-				if (ft_intersection(&sray, &mrt) > 0)
-				{
-					// printf("SHADOW_INTERSECT: %d\n");
-					ray.rgb.r = 0; 
-					ray.rgb.g = 0; 
-					ray.rgb.b = 0;
-				}
-				else
-					calculate_color(&ray, mrt.obj[obj_index]);
+				make_hardshadows(&sray, &ray, obj_index, &mrt);
+				ambient_light(&ray, &mrt);
 			}
 			else
-				calculate_color(&ray, mrt.obj[0]);
+				paint_obj_color(&ray, mrt.obj[0]);
+			
+			// update_color(&ray);
 			ray.bounces++;
 		}
 		place_pixel(&ray, mrt.img);
-		ft_putlight(L1, &mrt);
+		ft_putlight(mrt.light, &mrt);
 		ray.bounces = 0;
 		i++;
 	}

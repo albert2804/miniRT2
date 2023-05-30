@@ -14,8 +14,4 @@ double		ft_intersect_plane(t_ray *r, t_plane *p);
 int			ft_dotplane(t_ray *r, t_plane *p);
 t_vector	shadowray_start(t_obj *object, t_ray *ray, int obj_index);
 
-// TO-DO
-// t_vector	ft_intersection_c(t_cylinder cyl, t_ray ray); // calculates the nearest intersection point
-// t_vector	ft_intersection_p(t_plane plane, t_ray ray); // calculates the nearest intersection point
-
 # endif

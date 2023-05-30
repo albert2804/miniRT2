@@ -6,7 +6,7 @@
 /*   By: aestraic <aestraic@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/17 17:22:25 by aestraic          #+#    #+#             */
-/*   Updated: 2023/05/29 15:33:04 by aestraic         ###   ########.fr       */
+/*   Updated: 2023/05/30 14:18:40 by aestraic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,20 +81,20 @@ t_vector	*viewport_coord_into_points(t_viewport vp, t_alloc *alloc)
 }
 
 //makes a black background color
-t_color	background_color(void)
+t_color	paint_color(double r, double g, double b)
 {
 	t_color	color;
 
-	color.r = 0;
-	color.g = 0;
-	color.b = 0;
+	color.r = r;
+	color.g = g;
+	color.b = b;
 
 	return (color);
 }
 
 // updates the color for that ray at intersection point
 //for testing the intersection points are green
-void	calculate_color(t_ray *ray, t_obj obj)
+void	paint_obj_color(t_ray *ray, t_obj obj)
 {
 	ray->rgb = *obj.color;
 }

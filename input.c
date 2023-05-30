@@ -6,7 +6,7 @@
 /*   By: aestraic <aestraic@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/09 17:02:27 by arasal            #+#    #+#             */
-/*   Updated: 2023/05/29 14:54:43 by aestraic         ###   ########.fr       */
+/*   Updated: 2023/05/30 15:02:56 by aestraic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -114,6 +114,49 @@ static void	create_obj_cylinder(t_struct *mrt, char **split, int index)
 	mrt->obj[index].cylinder = c;
 }
 
+//Light
+void create_light(t_struct *mrt)
+{
+	mrt->light.brightness = 1.0;
+	mrt->light.color.r = 1.0;
+	mrt->light.color.g = 1.0;
+	mrt->light.color.b = 1.0;
+	mrt->light.light_p.x = 0.0;
+	mrt->light.light_p.y = 0.0;
+	mrt->light.light_p.z = 50.0;
+}
+
+//Ambient Lighing
+void create_ambient_light(t_struct *mrt)
+{
+	// if (mrt->ambient.amb_ratio > 1)
+	// 	throw error;
+	mrt->ambient.amb_ratio = 0.0;
+	mrt->ambient.color.r = 0.5;
+	mrt->ambient.color.g = 0.5;
+	mrt->ambient.color.b = 0.5;
+}
+
+/**
+int type is a flag to determine if the ray is a normal ray \
+shadow or light
+normal ray: shadow = 0;
+normal ray: shadow = 1;
+normal ray: shadow = 2;
+*/
+void init_ray(t_ray *ray, int type)
+{
+	ray->rgb.r = 0;
+	ray->rgb.g = 0;
+	ray->rgb.b = 0;
+	ray->bounces = 0;
+	ray->type = type;
+	if (ray->type == 1)
+		ray->t = 1;
+	else
+		ray->t = T_MAX;
+}
+
 void	ft_input(t_struct *mrt, char **argv)
 {
 	int			index;
@@ -138,4 +181,7 @@ void	ft_input(t_struct *mrt, char **argv)
 		str = get_next_line(fd);
 		index++;
 	}
+	create_ambient_light(mrt);
+	create_light(mrt);
 }
+

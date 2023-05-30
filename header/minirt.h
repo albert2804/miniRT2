@@ -30,4 +30,5 @@ void	*free_s(char **str);
 int		ft_strcmp(const char *s1, const char *s2);
 
 void	ft_input(t_struct *rt, char **argv);
+void	init_ray(t_ray *ray, int type);
 #endif

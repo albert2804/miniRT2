@@ -6,7 +6,7 @@
 /*   By: aestraic <aestraic@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/15 14:39:26 by aestraic          #+#    #+#             */
-/*   Updated: 2023/05/29 19:11:42 by aestraic         ###   ########.fr       */
+/*   Updated: 2023/05/30 12:26:02 by aestraic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -123,38 +123,6 @@ t_vector	ft_calculate_point(t_ray r, double t)
 // 	mrt->ray->direction = ft_normalized(&direction);
 // 	mrt->ray->t = T_MAX;
 // }
-
-void		send_ray(t_ray *ray, t_vector p1, t_vector p2)
-{
-	t_vector direction;
-	
-	ray->viewport = p2;
-	ray->origin_p = p1;
-	direction = ft_substractv(p2, p1);
-	// ray->direction = ft_normalized(direction);
-	ray->direction = direction;
-	ray->t = T_MAX;
-	ray->rgb.r = 0;
-	ray->rgb.g = 0;
-	ray->rgb.b = 0;
-	ray->bounces = 0;
-	ray->shadow = false;
-}
-
-void		send_shadowray(t_ray *sray, t_vector intersect_p, t_vector light_p)
-{
-	t_vector direction;
-	
-	sray->origin_p = intersect_p;
-	direction = ft_substractv(light_p, intersect_p);
-	// sray->direction = ft_normalized(direction);
-	sray->direction = direction;
-	sray->t = T_MAX;
-	sray->rgb.r = 0;
-	sray->rgb.g = 0;
-	sray->rgb.b = 0;
-	sray->shadow = true;
-}
 
 double	ft_midnight(double a, double b, double c)
 {
