@@ -4,5 +4,5 @@ miniRT
 miniRT.dSYM
 text/
 *.txt
-MLX42
+/MLX42/
 .vscode
