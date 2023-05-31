@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   vector.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aestraic <aestraic@student.42.fr>          +#+  +:+       +#+        */
+/*   By: arasal <arasal@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/15 14:39:26 by aestraic          #+#    #+#             */
-/*   Updated: 2023/05/30 12:26:02 by aestraic         ###   ########.fr       */
+/*   Updated: 2023/05/31 18:53:17 by arasal           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,27 +107,16 @@ t_vector	ft_substractv(t_vector v1, t_vector v2)
 
 t_vector	ft_calculate_point(t_ray r, double t)
 {
-	t_vector point;
+	t_vector	point;
 
 	point = ft_addv(r.origin_p, ft_multiply(r.direction, t));
 	return (point);
 }
 
-// void		send_ray(t_struct *mrt, int i)
-// {
-// 	t_vector	direction;
-
-// 	mrt->ray->viewport = mrt->vp_coord[i];
-// 	mrt->ray->origin_p = mrt->zero;
-// 	direction = ft_substractv(mrt->vp_coord[i], mrt->zero);
-// 	mrt->ray->direction = ft_normalized(&direction);
-// 	mrt->ray->t = T_MAX;
-// }
-
 double	ft_midnight(double a, double b, double c)
 {
-	double t1;
-	double t2;
+	double	t1;
+	double	t2;
 
 	t1 = 0.0;
 	t2 = 0.0;
@@ -135,26 +124,50 @@ double	ft_midnight(double a, double b, double c)
 	{
 		t1 = (double)((-b + sqrt(b * b - 4 * a * c))) / (double)(2 * a);
 		t2 = (double)((-b - sqrt(b * b - 4 * a * c))) / (double)(2 * a);
-		// printf("t1: %f\t", t1);
-		// printf("t2: %f\n", t2);
 	}
 	else
 		return (-1);
 	if (t1 >= T_MIN && t2 >= T_MIN && t1 >= t2)
-		return(t2);
-	else if(t1 >= T_MIN && t2 >= T_MIN && t2 >= t1)
-		return(t1);
-	else if(t1 >= T_MIN && t2 < T_MIN)
-		return(t1);
-	else if(t2 >= T_MIN && t1 < T_MIN)
-		return(t2);
+		return (t2);
+	else if (t1 >= T_MIN && t2 >= T_MIN && t2 >= t1)
+		return (t1);
+	else if (t1 >= T_MIN && t2 < T_MIN)
+		return (t1);
+	else if (t2 >= T_MIN && t1 < T_MIN)
+		return (t2);
 	return (-1);
 }
 
+double	ft_midnight2(double a, double b, double c, t_cylinder *cylinder)
+{
+	double	t1;
+	double	t2;
+
+	t1 = 0;
+	t2 = 0;
+	if (b * b >= 4 * a * c)
+	{
+		t1 = (double)((-b + sqrt(b * b - 4 * a * c))) / (double)(2 * a);
+		t2 = (double)((-b - sqrt(b * b - 4 * a * c))) / (double)(2 * a);
+	}
+	else
+		return (-1);
+	cylinder->t1 = t1;
+	cylinder->t2 = t2;
+	if (t1 >= T_MIN && t2 >= T_MIN && t1 >= t2)
+		return (t2);
+	else if (t1 >= T_MIN && t2 >= T_MIN && t2 > t1)
+		return (t1);
+	else if (t1 >= T_MIN && t2 < T_MIN)
+		return (t1);
+	else if (t2 >= T_MIN && t1 < T_MIN)
+		return (t2);
+	return (-1);
+}
 
 t_vector	vec_from_points(t_vector point1, t_vector point2)
 {
-	t_vector vector;
+	t_vector	vector;
 
 	vector.x = point2.x - point1.x;
 	vector.y = point2.y - point1.y;

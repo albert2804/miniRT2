@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   camera.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aestraic <aestraic@student.42.fr>          +#+  +:+       +#+        */
+/*   By: arasal <arasal@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/17 17:22:25 by aestraic          #+#    #+#             */
-/*   Updated: 2023/05/31 14:58:30 by aestraic         ###   ########.fr       */
+/*   Updated: 2023/05/31 18:16:06 by arasal           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,8 @@ t_vector	*viewport_coord_into_points(t_viewport vp, t_alloc *alloc)
 	int			i;
 	t_vector	*points;
 
-	points = advanced_calloc(sizeof(t_vector), WIDTH * HEIGHT, (void *)&alloc->points);
+	points = advanced_calloc(sizeof(t_vector), \
+WIDTH * HEIGHT, (void *)&alloc->points);
 	w = 0;
 	h = 0;
 	i = 0;
@@ -88,7 +89,6 @@ t_color	paint_color(double r, double g, double b)
 	color.r = r;
 	color.g = g;
 	color.b = b;
-
 	return (color);
 }
 

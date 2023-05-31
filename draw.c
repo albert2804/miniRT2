@@ -3,38 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   draw.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aestraic <aestraic@student.42.fr>          +#+  +:+       +#+        */
+/*   By: arasal <arasal@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/22 18:10:46 by aestraic          #+#    #+#             */
-/*   Updated: 2023/05/29 14:21:20 by aestraic         ###   ########.fr       */
+/*   Updated: 2023/05/31 18:18:51 by arasal           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <minirt.h>
-
-// void	draw_image(mlx_image_t *g_img, t_trans *transform)
-// {
-// 	int		x;
-// 	int		y;
-// 	size_t	node;
-// 	int		color;
-
-// 	node = 0;
-// 	x = 0;
-// 	y = 0;
-// 	(void)g_img;
-// 	while (node < transform->map_data->total_count)
-// 	{
-// 		color = get_rgba(transform->map_data->rgb_values[node][0], \
-// 						transform->map_data->rgb_values[node][1], \
-// 						transform->map_data->rgb_values[node][2], 255);
-// 		x = transform->b_x[node];
-// 		y = transform->b_y[node];
-// 		ft_putpixel(x, y, color, transform);
-// 		node ++;
-// 	}
-// 	draw_grid(transform, g_img);
-// }
 
 int	get_rgba(int r, int g, int b, int a)
 {
@@ -43,13 +19,15 @@ int	get_rgba(int r, int g, int b, int a)
 
 void	place_pixel(t_ray *ray, mlx_image_t *img)
 {
-	int color;
-	uint32_t x;
-	uint32_t y;
-	
+	int			color;
+	uint32_t	x;
+	uint32_t	y;
+
 	color = get_rgba(ray->rgb.r * R, ray->rgb.g * G, ray->rgb.b * B, 255);
-	x = (float)((ray->viewport.x * ((float)WIDTH / (float)V_W)) + ((float)WIDTH / 2));
-	y = (float)((-ray->viewport.y * ((float)HEIGHT / (float)V_H)) + ((float)HEIGHT / 2));
+	x = (float)((ray->viewport.x * ((float)WIDTH / (float)V_W)) + \
+	((float)WIDTH / 2));
+	y = (float)((-ray->viewport.y * ((float)HEIGHT / (float)V_H)) + \
+	((float)HEIGHT / 2));
 	ft_putpixel(x, y, color, img);
 }
 
@@ -64,12 +42,14 @@ bool	ft_putpixel(uint32_t x, uint32_t y, int color, mlx_image_t *img)
 
 void	ft_putlight(t_light L, t_struct *mrt)
 {
-	int color;
-	uint32_t x;
-	uint32_t y;
-	
-	x = (float)((L.light_p.x * ((float)WIDTH / (float)V_W)) + ((float)WIDTH / 2));
-	y = (float)((L.light_p.y * ((float)HEIGHT / (float)V_H)) + ((float)HEIGHT / 2));
+	int			color;
+	uint32_t	x;
+	uint32_t	y;
+
+	x = (float)((L.light_p.x * ((float)WIDTH / (float)V_W)) + \
+	((float)WIDTH / 2));
+	y = (float)((L.light_p.y * ((float)HEIGHT / (float)V_H)) + \
+	((float)HEIGHT / 2));
 	color = get_rgba(L.color.r * R, L.color.g * G, L.color.b * B, 255);
 	ft_putpixel(x, y, color, mrt->img);
 }

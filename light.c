@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   light.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aestraic <aestraic@student.42.fr>          +#+  +:+       +#+        */
+/*   By: arasal <arasal@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/30 13:00:32 by aestraic          #+#    #+#             */
-/*   Updated: 2023/05/31 16:20:38 by aestraic         ###   ########.fr       */
+/*   Updated: 2023/05/31 19:25:12 by arasal           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,14 +15,17 @@
 
 void	ambient_light(t_ray *ray, t_struct *mrt)
 {
-	ray->rgb.r += (mrt->ambient.amb_ratio * mrt->ambient.color.r) / 2;
-	ray->rgb.g += (mrt->ambient.amb_ratio * mrt->ambient.color.g) / 2;
-	ray->rgb.b += (mrt->ambient.amb_ratio * mrt->ambient.color.b) / 2;
+	ray->rgb.r = (ray->rgb.r + \
+	mrt->ambient.amb_ratio * mrt->ambient.color.r) / 2;
+	ray->rgb.g = (ray->rgb.g + \
+	mrt->ambient.amb_ratio * mrt->ambient.color.g) / 2;
+	ray->rgb.b = (ray->rgb.b + \
+	mrt->ambient.amb_ratio * mrt->ambient.color.b) / 2;
 }
 
 //calculates the normalvector, depending on the position of the object
 //returns a zerovector for the background.
-t_vector calc_normalvector(t_vector pos, t_obj *object, int obj_index)
+t_vector	calc_normalvector(t_vector pos, t_obj *object, int obj_index)
 {
 	int			i;
 	t_vector	normal;

@@ -30,5 +30,6 @@ int 		hardshadows(t_ray *sray, t_ray *ray, int obj_index, t_struct *mrt);
 void		print_vector(const char *str, t_vector a);
 void 		print_ray(const char *str, t_ray ray, double t);
 double		ft_midnight(double a, double b, double c);
+double		ft_midnight2(double a, double b, double c, t_cylinder *cylinder);
 
 # endif

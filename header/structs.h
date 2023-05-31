@@ -67,6 +67,8 @@ typedef struct s_cylinder
 	double		height;
 	t_color		color;
 	bool		exist;
+	double		t1;
+	double		t2;
 }
 		t_cylinder;
 
@@ -98,6 +100,7 @@ typedef struct s_camera
 {
 	t_vector	view_p;
 	t_vector	orientation;
+	double		fov;
 }			t_camera;
 
 typedef struct s_viewport
@@ -136,6 +139,7 @@ typedef struct s_struct
 	mlx_t			*mlx;
 	mlx_image_t		*img;
 	t_vector		zero;
+	t_camera		*camera;
 	t_ray			*ray;
 	t_obj			*obj;
 	t_bg			bg;

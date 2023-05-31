@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aestraic <aestraic@student.42.fr>          +#+  +:+       +#+        */
+/*   By: arasal <arasal@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/16 14:36:03 by aestraic          #+#    #+#             */
-/*   Updated: 2023/05/31 15:56:37 by aestraic         ###   ########.fr       */
+/*   Updated: 2023/05/31 19:24:03 by arasal           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -438,7 +438,7 @@
 // 	// system("leaks miniRT");
 // }
 
-static void	ft_init(t_struct *mrt, char **argv)
+static void	ft_init_obj(t_struct *mrt, char **argv)
 {
 	int		fd;
 	int		number;
@@ -453,15 +453,21 @@ static void	ft_init(t_struct *mrt, char **argv)
 		str = get_next_line(fd);
 	}
 	mrt->obj = ft_calloc(sizeof(t_obj), number);
+	mrt->bg.color.r = 0;
+	mrt->bg.color.g = 0;
+	mrt->bg.color.b = 0;
+	mrt->bg.exist = true;
+	mrt->obj[0].background = &mrt->bg;
+	mrt->obj[0].color = &mrt->bg.color;
+	mrt->obj[0].exist = &mrt->bg.exist;
+}
+
+static void	ft_init(t_struct *mrt, char **argv)
+{
+	ft_init_obj(mrt, argv);
 	mrt->zero.x = 0.0f;
 	mrt->zero.y = 0.0f;
 	mrt->zero.z = 0.0f;
-	mrt->bg.color.r = 0.2;
-	mrt->bg.color.g = 0.2;
-	mrt->bg.color.b = 0.2;
-	mrt->bg.exist = true;
-	mrt->obj[0].color = &mrt->bg.color;
-	mrt->obj[0].exist = &mrt->bg.exist;
 	ft_input(mrt, argv);
 	mrt->allocations = ft_calloc(sizeof(t_alloc), 1);
 	mrt->vp = viewport_coordinates(mrt->allocations);
@@ -490,6 +496,11 @@ int	main(int argc, char **argv)
 	obj_index = 0;
 	in_shadow = 0;
 	(void) sray;
+	printf("L.r: %f", mrt.ambient.color.r);
+	printf("L.r: %f", mrt.ambient.color.g);
+	printf("L.r: %f", mrt.ambient.color.b);
+	printf("L.r: %f", mrt.ambient.amb_ratio);
+	// exit(0);
 	while (i < (WIDTH * HEIGHT))
 	{
 		send_ray(&ray, mrt.zero, mrt.vp_coord[i]);

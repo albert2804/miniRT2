@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   input.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aestraic <aestraic@student.42.fr>          +#+  +:+       +#+        */
+/*   By: arasal <arasal@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/09 17:02:27 by arasal            #+#    #+#             */
-/*   Updated: 2023/05/31 15:53:17 by aestraic         ###   ########.fr       */
+/*   Updated: 2023/05/31 19:20:20 by arasal           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,9 +52,9 @@ static void	create_obj_plane(t_struct *mrt, char **split, int index)
 	p->normal.z = ft_atof(split2[2]);
 	free_s(split2);
 	split2 = ft_split(split[3], ',');
-	p->color.r = ft_atof(split2[0]) / (double)510;
-	p->color.g = ft_atof(split2[1]) / (double)510;
-	p->color.b = ft_atof(split2[2]) / (double)510;
+	p->color.r = ft_atof(split2[0]) / (double)255;
+	p->color.g = ft_atof(split2[1]) / (double)255;
+	p->color.b = ft_atof(split2[2]) / (double)255;
 	free_s(split2);
 	p->exist = true;
 	mrt->obj[index].color = &(p->color);
@@ -75,9 +75,9 @@ static void	create_obj_sphere(t_struct *mrt, char **split, int index)
 	free_s(split2);
 	s->radius = ft_atof(split[2]) / 2;
 	split2 = ft_split(split[3], ',');
-	s->color.r = ft_atof(split2[0]) / (double)510;
-	s->color.g = ft_atof(split2[1]) / (double)510;
-	s->color.b = ft_atof(split2[2]) / (double)510;
+	s->color.r = ft_atof(split2[0]) / (double)255;
+	s->color.g = ft_atof(split2[1]) / (double)255;
+	s->color.b = ft_atof(split2[2]) / (double)255;
 	free_s(split2);
 	s->exist = true;
 	mrt->obj[index].color = &(s->color);
@@ -104,9 +104,9 @@ static void	create_obj_cylinder(t_struct *mrt, char **split, int index)
 	c->radius = ft_atof(split[3]) / 2;
 	c->height = ft_atof(split[4]);
 	split2 = ft_split(split[5], ',');
-	c->color.r = ft_atof(split2[0]) / (double)510;
-	c->color.g = ft_atof(split2[1]) / (double)510;
-	c->color.b = ft_atof(split2[2]) / (double)510;
+	c->color.r = ft_atof(split2[0]) / (double)255;
+	c->color.g = ft_atof(split2[1]) / (double)255;
+	c->color.b = ft_atof(split2[2]) / (double)255;
 	free_s(split2);
 	c->exist = true;
 	mrt->obj[index].color = &(c->color);
@@ -114,27 +114,57 @@ static void	create_obj_cylinder(t_struct *mrt, char **split, int index)
 	mrt->obj[index].cylinder = c;
 }
 
-//Light
-void create_light(t_struct *mrt)
+static void	create_camera(t_struct *mrt, char **split)
 {
-	mrt->light.intensity = 1.0;
-	mrt->light.color.r = 1.0;
-	mrt->light.color.g = 1.0;
-	mrt->light.color.b = 1.0;
-	mrt->light.light_p.x = 10.0;
-	mrt->light.light_p.y = 10.0;
-	mrt->light.light_p.z = 0.0;
+	t_camera	*camera;
+	char		**split2;
+
+	camera = malloc(sizeof(t_camera));
+	split2 = ft_split(split[1], ',');
+	camera->view_p.x = ft_atof(split2[0]);
+	camera->view_p.y = ft_atof(split2[1]);
+	camera->view_p.z = ft_atof(split2[2]);
+	free_s(split2);
+	split2 = ft_split(split[2], ',');
+	camera->orientation.x = ft_atof(split2[0]);
+	camera->orientation.y = ft_atof(split2[1]);
+	camera->orientation.z = ft_atof(split2[2]);
+	free_s(split2);
+	camera->fov = ft_atof(split[3]);
+	mrt->camera = camera;
 }
 
-//Ambient Lighing
-void create_ambient_light(t_struct *mrt)
+static void	create_light(t_struct *mrt, char **split)
 {
-	// if (mrt->ambient.amb_ratio > 1)
-	// 	throw error;
-	mrt->ambient.amb_ratio = 0.0;
-	mrt->ambient.color.r = 0.5;
-	mrt->ambient.color.g = 0.5;
-	mrt->ambient.color.b = 0.5;
+	t_light		light;
+	char		**split2;
+
+	split2 = ft_split(split[1], ',');
+	light.light_p.x = ft_atof(split2[0]);
+	light.light_p.y = ft_atof(split2[1]);
+	light.light_p.z = ft_atof(split2[2]);
+	free_s(split2);
+	light.intensity = ft_atof(split[2]);
+	split2 = ft_split(split[3], ',');
+	light.color.r = ft_atof(split2[0]) / (double)255;
+	light.color.g = ft_atof(split2[1]) / (double)255;
+	light.color.b = ft_atof(split2[2]) / (double)255;
+	free_s(split2);
+	mrt->light = light;
+}
+
+static void	create_amb(t_struct *mrt, char **split)
+{
+	t_amb		amb;
+	char		**split2;
+
+	amb.amb_ratio = ft_atof(split[1]);
+	split2 = ft_split(split[2], ',');
+	amb.color.r = ft_atof(split2[0]) / (double)255;
+	amb.color.g = ft_atof(split2[1]) / (double)255;
+	amb.color.b = ft_atof(split2[2]) / (double)255;
+	free_s(split2);
+	mrt->ambient = amb;
 }
 
 /**
@@ -177,11 +207,14 @@ void	ft_input(t_struct *mrt, char **argv)
 			create_obj_sphere(mrt, split, index);
 		if (!ft_strncmp(split[0], "cy", 2))
 			create_obj_cylinder(mrt, split, index);
+		if (!ft_strncmp(split[0], "C", 1))
+			create_camera(mrt, split);
+		if (!ft_strncmp(split[0], "A", 1))
+			create_amb(mrt, split);
+		if (!ft_strncmp(split[0], "L", 1))
+			create_light(mrt, split);
 		free_s(split);
 		str = get_next_line(fd);
 		index++;
 	}
-	create_ambient_light(mrt);
-	create_light(mrt);
 }
-
