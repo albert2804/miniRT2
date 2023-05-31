@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   light.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: arasal <arasal@student.42heilbronn.de>     +#+  +:+       +#+        */
+/*   By: aestraic <aestraic@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/30 13:00:32 by aestraic          #+#    #+#             */
-/*   Updated: 2023/05/31 19:25:12 by arasal           ###   ########.fr       */
+/*   Updated: 2023/05/31 21:38:00 by aestraic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,9 @@ t_vector	calc_normalvector(t_vector pos, t_obj *object, int obj_index)
 {
 	int			i;
 	t_vector	normal;
-
+	double		p;
+	
+	p = 0;
 	i = obj_index;
 	normal.x = 0;
 	normal.y = 0;
@@ -44,10 +46,13 @@ t_vector	calc_normalvector(t_vector pos, t_obj *object, int obj_index)
 		normal = object[i].plane->normal;
 		normal = ft_multiply(normal, -1);
 	}
-	// if (object[i].cylinder)
-	// {
-	// 	normal2 = object[i].cylinder_tube->normal;
-	// }
+	if (object[i].cylinder)
+	{
+		normal = ft_substractv(pos, object[i].cylinder->centre_p);
+		normal = ft_normalized(normal);
+		p = ft_dotp(normal, object[i].cylinder->axis_normal);
+		normal = ft_substractv(normal, ft_multiply(object[i].cylinder->axis_normal, p));
+	}
 	return (normal);
 }
 

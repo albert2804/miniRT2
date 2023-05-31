@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   camera.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: arasal <arasal@student.42heilbronn.de>     +#+  +:+       +#+        */
+/*   By: aestraic <aestraic@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/17 17:22:25 by aestraic          #+#    #+#             */
-/*   Updated: 2023/05/31 18:16:06 by arasal           ###   ########.fr       */
+/*   Updated: 2023/05/31 21:42:33 by aestraic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,7 @@ t_vector	*viewport_coord_into_points(t_viewport vp, t_alloc *alloc)
 	t_vector	*points;
 
 	points = advanced_calloc(sizeof(t_vector), \
-WIDTH * HEIGHT, (void *)&alloc->points);
+	WIDTH * HEIGHT, (void *)&alloc->points);
 	w = 0;
 	h = 0;
 	i = 0;
@@ -72,7 +72,7 @@ WIDTH * HEIGHT, (void *)&alloc->points);
 		{
 			points[i].x = vp.x[w];
 			points[i].y = vp.y[h];
-			points[i].z = vp.distance;
+			points[i].z = vp.distance - 10;
 			i++;
 			w++;
 		}

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   draw.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: arasal <arasal@student.42heilbronn.de>     +#+  +:+       +#+        */
+/*   By: aestraic <aestraic@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/22 18:10:46 by aestraic          #+#    #+#             */
-/*   Updated: 2023/05/31 18:18:51 by arasal           ###   ########.fr       */
+/*   Updated: 2023/05/31 20:36:53 by aestraic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,9 +24,9 @@ void	place_pixel(t_ray *ray, mlx_image_t *img)
 	uint32_t	y;
 
 	color = get_rgba(ray->rgb.r * R, ray->rgb.g * G, ray->rgb.b * B, 255);
-	x = (float)((ray->viewport.x * ((float)WIDTH / (float)V_W)) + \
+	x = (float)(((ray->viewport.x)* ((float)WIDTH / (float)V_W)) + \
 	((float)WIDTH / 2));
-	y = (float)((-ray->viewport.y * ((float)HEIGHT / (float)V_H)) + \
+	y = (float)(((-ray->viewport.y) * ((float)HEIGHT / (float)V_H)) + \
 	((float)HEIGHT / 2));
 	ft_putpixel(x, y, color, img);
 }

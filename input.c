@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   input.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: arasal <arasal@student.42heilbronn.de>     +#+  +:+       +#+        */
+/*   By: aestraic <aestraic@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/09 17:02:27 by arasal            #+#    #+#             */
-/*   Updated: 2023/05/31 19:20:20 by arasal           ###   ########.fr       */
+/*   Updated: 2023/05/31 21:16:16 by aestraic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ static void	create_obj_plane(t_struct *mrt, char **split, int index)
 	t_plane		*p;
 	char		**split2;
 
-	p = malloc(sizeof(t_plane));
+	p = ft_calloc(sizeof(t_plane), 1);
 	split2 = ft_split(split[1], ',');
 	p->position_p.x = ft_atof(split2[0]);
 	p->position_p.y = ft_atof(split2[1]);
@@ -67,7 +67,7 @@ static void	create_obj_sphere(t_struct *mrt, char **split, int index)
 	t_sphere	*s;
 	char		**split2;
 
-	s = malloc(sizeof(t_sphere));
+	s = ft_calloc(sizeof(t_sphere), 1);
 	split2 = ft_split(split[1], ',');
 	s->centre_p.x = ft_atof(split2[0]);
 	s->centre_p.y = ft_atof(split2[1]);
@@ -90,7 +90,7 @@ static void	create_obj_cylinder(t_struct *mrt, char **split, int index)
 	t_cylinder	*c;
 	char		**split2;
 
-	c = malloc(sizeof(t_cylinder));
+	c = ft_calloc(sizeof(t_cylinder), 1);
 	split2 = ft_split(split[1], ',');
 	c->centre_p.x = ft_atof(split2[0]);
 	c->centre_p.y = ft_atof(split2[1]);
@@ -119,10 +119,10 @@ static void	create_camera(t_struct *mrt, char **split)
 	t_camera	*camera;
 	char		**split2;
 
-	camera = malloc(sizeof(t_camera));
+	camera = ft_calloc(sizeof(t_camera), 1);
 	split2 = ft_split(split[1], ',');
-	camera->view_p.x = ft_atof(split2[0]);
-	camera->view_p.y = ft_atof(split2[1]);
+	camera->view_p.x = ft_atof(split2[0]) * (-1);
+	camera->view_p.y = ft_atof(split2[1]) * (-1);
 	camera->view_p.z = ft_atof(split2[2]);
 	free_s(split2);
 	split2 = ft_split(split[2], ',');
@@ -130,6 +130,7 @@ static void	create_camera(t_struct *mrt, char **split)
 	camera->orientation.y = ft_atof(split2[1]);
 	camera->orientation.z = ft_atof(split2[2]);
 	free_s(split2);
+	camera->orientation = ft_normalized(camera->orientation);
 	camera->fov = ft_atof(split[3]);
 	mrt->camera = camera;
 }

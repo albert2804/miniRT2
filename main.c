@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: arasal <arasal@student.42heilbronn.de>     +#+  +:+       +#+        */
+/*   By: aestraic <aestraic@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/16 14:36:03 by aestraic          #+#    #+#             */
-/*   Updated: 2023/05/31 19:24:03 by arasal           ###   ########.fr       */
+/*   Updated: 2023/05/31 21:41:14 by aestraic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -496,14 +496,9 @@ int	main(int argc, char **argv)
 	obj_index = 0;
 	in_shadow = 0;
 	(void) sray;
-	printf("L.r: %f", mrt.ambient.color.r);
-	printf("L.r: %f", mrt.ambient.color.g);
-	printf("L.r: %f", mrt.ambient.color.b);
-	printf("L.r: %f", mrt.ambient.amb_ratio);
-	// exit(0);
 	while (i < (WIDTH * HEIGHT))
 	{
-		send_ray(&ray, mrt.zero, mrt.vp_coord[i]);
+		send_ray(&ray, mrt.camera->view_p, mrt.vp_coord[i]);
 		while (ray.bounces < BOUNCES)
 		{
 			obj_index = ft_intersection(&ray, &mrt);
@@ -524,9 +519,6 @@ int	main(int argc, char **argv)
 			ray.bounces++;
 		}
 		place_pixel(&ray, mrt.img);
-		lray.rgb.r = 1;
-		lray.rgb.g = 1;
-		lray.rgb.b = 1;
 		ft_putlight(mrt.light, &mrt);
 		ray.bounces = 0;
 		i++;

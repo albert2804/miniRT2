@@ -1,10 +1,4 @@
 TO-DO
-
--finish lighting
--Finish parsing (Init ambient light and Camera)
-	ft_create_ambient_light(mrt)
-	ft_create_light(mrt)
--Cylinder rendered correctly?
 -Camera orientation
 
 -calculate normalvectors for a plane and cylinders
