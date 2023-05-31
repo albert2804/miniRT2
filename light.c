@@ -6,7 +6,7 @@
 /*   By: aestraic <aestraic@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/30 13:00:32 by aestraic          #+#    #+#             */
-/*   Updated: 2023/05/31 15:57:06 by aestraic         ###   ########.fr       */
+/*   Updated: 2023/05/31 16:20:38 by aestraic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,12 +62,11 @@ int	diffuse_lighting(t_ray *ray, t_ray *lray, int obj_index, t_struct *mrt)
 	lray_dir = ft_normalized(lray->direction);
 	lray_dir = ft_multiply(lray_dir, -1);
 	dot_product = ft_dotp(surface_dir, lray_dir);
-	printf("DP: %f\n", dot_product);
-	if (dot_product < 0)
+	if (dot_product < 0 && dot_product >= -0.1)
+		dot_product /= -2.0;
+	else if (dot_product < -0.1)
 		return (1);
 	intensity = dot_product;
-	// dot_product = dot_product  * (M_PI) / 180;
-	// printf("DP3: %f\n", dot_product);
 	ray->rgb.r = (ray->rgb.r + intensity * mrt->light.color.r) / 2;
 	ray->rgb.g = (ray->rgb.g + intensity * mrt->light.color.g) / 2;
 	ray->rgb.b = (ray->rgb.b + intensity * mrt->light.color.b) / 2;
