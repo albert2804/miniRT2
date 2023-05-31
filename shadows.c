@@ -6,7 +6,7 @@
 /*   By: aestraic <aestraic@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/30 11:21:23 by aestraic          #+#    #+#             */
-/*   Updated: 2023/05/31 15:09:50 by aestraic         ###   ########.fr       */
+/*   Updated: 2023/05/31 15:39:31 by aestraic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ void		send_ray(t_ray *ray, t_vector p1, t_vector p2)
 	// double angle_rad_y = angle_y * M_PI / 180;
 	// direction.x += direction.x + sin(angle_rad_x) * (FOV / 40);
 	// direction.y += direction.y + (cos(M_PI_2 - angle_rad_y));
-	ray->direction = ft_normalized(direction);
+	// ray->direction = ft_normalized(direction);
 	ray->direction = direction;
 	ray->t = T_MAX;
 }

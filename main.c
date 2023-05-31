@@ -6,7 +6,7 @@
 /*   By: aestraic <aestraic@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/16 14:36:03 by aestraic          #+#    #+#             */
-/*   Updated: 2023/05/31 14:27:16 by aestraic         ###   ########.fr       */
+/*   Updated: 2023/05/31 15:56:37 by aestraic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -502,8 +502,8 @@ int	main(int argc, char **argv)
 				ambient_light(&ray, &mrt);
 				if (in_shadow == 0)
 				{
-					send_ray(&lray, mrt.light.light_p, ft_calculate_point(ray, ray.t));
 					diffuse_lighting(&ray, &lray, obj_index, &mrt);
+					send_ray(&lray, mrt.light.light_p, ft_calculate_point(ray, ray.t));
 				}
 			}
 			else
@@ -513,6 +513,9 @@ int	main(int argc, char **argv)
 			ray.bounces++;
 		}
 		place_pixel(&ray, mrt.img);
+		lray.rgb.r = 1;
+		lray.rgb.g = 1;
+		lray.rgb.b = 1;
 		ft_putlight(mrt.light, &mrt);
 		ray.bounces = 0;
 		i++;
