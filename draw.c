@@ -6,7 +6,7 @@
 /*   By: arasal <arasal@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/22 18:10:46 by aestraic          #+#    #+#             */
-/*   Updated: 2023/05/31 22:14:36 by arasal           ###   ########.fr       */
+/*   Updated: 2023/05/31 23:06:53 by arasal           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ void	place_pixel(t_ray *ray, mlx_image_t *img, t_camera camera)
 	uint32_t	y;
 
 	color = get_rgba(ray->rgb.r * R, ray->rgb.g * G, ray->rgb.b * B, 255);
-	x = (float)(((ray->viewport.x + camera.view_p.x) * ((float)WIDTH / (float)V_W)) + \
+	x = (float)(((ray->viewport.x - camera.view_p.x) * ((float)WIDTH / (float)V_W)) + \
 	((float)WIDTH / 2));
 	y = (float)((-(ray->viewport.y - camera.view_p.y) * ((float)HEIGHT / (float)V_H)) + \
 	((float)HEIGHT / 2));
