@@ -8,11 +8,15 @@
 NAME = miniRT
 SRC = 	main.c\
 		vector.c\
+		vector2.c\
 		mem.c\
 		obstacle.c\
+		obstacle_utils.c\
+		midnight.c\
 		draw.c\
 		camera.c\
 		input.c\
+		input2.c\
 		shadows.c\
 		light.c\
 		test.c\
@@ -22,7 +26,7 @@ SRC = 	main.c\
 
 OBJ  = $(SRC:.c=.o)
 
-C_FLAGS = -g -Wall -Wextra -Werror -Ofast -fsanitize=address
+C_FLAGS = -Wall -Wextra -Werror -Ofast
 HEADER_PATH = header
 SRC_PATH = src
 OBJ_PATH = obj

@@ -6,16 +6,14 @@
 /*   By: arasal <arasal@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/14 18:17:27 by aestraic          #+#    #+#             */
-/*   Updated: 2023/05/31 18:48:42 by arasal           ###   ########.fr       */
+/*   Updated: 2023/05/31 23:43:12 by arasal           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "vector.h"
-#include "obstacle.h"
+#include "header/vector.h"
+#include "header/obstacle.h"
 
-//returns the index of the objectlist
-//if there is no intersection at all, the return value will be 0, which must be background
-int		ft_intersection(t_ray *ray, t_struct *mrt) // calculates the nearest intersection point
+int	ft_intersection(t_ray *ray, t_struct *mrt)
 {
 	int			i;
 	int			obj_index;
@@ -41,7 +39,7 @@ int		ft_intersection(t_ray *ray, t_struct *mrt) // calculates the nearest inters
 	return (obj_index);
 }
 
-void	ft_intersection_s(t_sphere sphere, t_ray *ray, int i, int *index) // calculates the nearest intersection point
+void	ft_intersection_s(t_sphere sphere, t_ray *ray, int i, int *index)
 {
 	t_vector	intersect;
 	double		a;
@@ -61,37 +59,7 @@ void	ft_intersection_s(t_sphere sphere, t_ray *ray, int i, int *index) // calcul
 	}
 }
 
-static double	cal_m(double *t, t_cylinder cylinder,
-t_ray *ray, t_vector intersect)
-{
-	double	m[2];
-	double	n;
-	t_plane	p;
-
-	m[0] = 0;
-	m[1] = 0;
-	n = 0;
-	m[0] = (ft_dotp(ray->direction, cylinder.axis_normal) * \
-	(cylinder.t1)) + ft_dotp(intersect, cylinder.axis_normal);
-	m[1] = (ft_dotp(ray->direction, cylinder.axis_normal) * \
-	(cylinder.t2)) + ft_dotp(intersect, cylinder.axis_normal);
-	if ((m[0] >= ((cylinder.height / 2) * -1) && m[0] <= (cylinder.height / 2)) \
-	|| (m[1] >= ((cylinder.height / 2) * -1) && m[1] <= (cylinder.height / 2)))
-		return (m[1]);
-	else
-	{
-		p.normal = cylinder.axis_normal;
-		p.position_p = ft_addv(cylinder.centre_p, \
-		ft_multiply(p.normal, cylinder.height / 2));
-		if (ft_dotplane(ray, &p))
-			n = ft_intersect_plane(ray, &p);
-		if (n >= T_MIN && n <= T_MAX && n <= ray->t && n < *t)
-			*t = n;
-		return (-1);
-	}
-}
-
-void	ft_intersection_c(t_cylinder cylinder, t_ray *ray, int i, int *index) // calculates the nearest intersection point
+void	ft_intersection_c(t_cylinder cylinder, t_ray *ray, int i, int *index)
 {
 	t_vector	intersect;
 	double		a;
@@ -112,26 +80,6 @@ void	ft_intersection_c(t_cylinder cylinder, t_ray *ray, int i, int *index) // ca
 		ray->t = d;
 		*index = i;
 	}
-}
-
-int	ft_dotplane(t_ray *r, t_plane *p)
-{
-	if (ft_dotp(r->direction, p->normal) == 0)
-		return (0);
-	return (1);
-}
-
-double	ft_intersect_plane(t_ray *r, t_plane *p)
-{
-	double		t;
-	t_vector	sub;
-
-	sub = ft_substractv(p->position_p, r->origin_p);
-	t = ft_dotp(sub, p->normal);
-	t = t / ft_dotp(r->direction, p->normal);
-	if (t <= T_MIN || t >= T_MAX)
-		return (0);
-	return (t);
 }
 
 void	ft_intersection_p(t_plane plane, t_ray *ray, int i, int *index)

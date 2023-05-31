@@ -3,15 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   light.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aestraic <aestraic@student.42.fr>          +#+  +:+       +#+        */
+/*   By: arasal <arasal@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/30 13:00:32 by aestraic          #+#    #+#             */
-/*   Updated: 2023/05/31 21:38:00 by aestraic         ###   ########.fr       */
+/*   Updated: 2023/05/31 23:42:17 by arasal           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "vector.h"
-#include "camera.h"
+#include "header/vector.h"
+#include "header/camera.h"
 
 void	ambient_light(t_ray *ray, t_struct *mrt)
 {
@@ -23,15 +23,24 @@ void	ambient_light(t_ray *ray, t_struct *mrt)
 	mrt->ambient.amb_ratio * mrt->ambient.color.b) / 2;
 }
 
+static void	cyl_normal(t_vector *normal, t_vector pos, t_obj *object, int i)
+{
+	double		p;
+
+	*normal = ft_substractv(pos, object[i].cylinder->centre_p);
+	*normal = ft_normalized(*normal);
+	p = ft_dotp(*normal, object[i].cylinder->axis_normal);
+	*normal = ft_substractv(*normal, \
+	ft_multiply(object[i].cylinder->axis_normal, p));
+}
+
 //calculates the normalvector, depending on the position of the object
 //returns a zerovector for the background.
 t_vector	calc_normalvector(t_vector pos, t_obj *object, int obj_index)
 {
 	int			i;
 	t_vector	normal;
-	double		p;
-	
-	p = 0;
+
 	i = obj_index;
 	normal.x = 0;
 	normal.y = 0;
@@ -47,12 +56,7 @@ t_vector	calc_normalvector(t_vector pos, t_obj *object, int obj_index)
 		normal = ft_multiply(normal, -1);
 	}
 	if (object[i].cylinder)
-	{
-		normal = ft_substractv(pos, object[i].cylinder->centre_p);
-		normal = ft_normalized(normal);
-		p = ft_dotp(normal, object[i].cylinder->axis_normal);
-		normal = ft_substractv(normal, ft_multiply(object[i].cylinder->axis_normal, p));
-	}
+		cyl_normal(&normal, pos, object, i);
 	return (normal);
 }
 

@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   structs.h                                          :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: arasal <arasal@student.42heilbronn.de>     +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/05/31 23:19:47 by arasal            #+#    #+#             */
+/*   Updated: 2023/05/31 23:19:48 by arasal           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #ifndef STRUCTS_H
 # define STRUCTS_H
 
@@ -69,8 +81,7 @@ typedef struct s_cylinder
 	bool		exist;
 	double		t1;
 	double		t2;
-}
-		t_cylinder;
+}			t_cylinder;
 
 // BACKGROUND_SRTUCT		
 typedef struct s_bg
@@ -138,16 +149,15 @@ typedef struct s_struct
 {
 	mlx_t			*mlx;
 	mlx_image_t		*img;
-	t_vector		zero;
 	t_camera		*camera;
 	t_ray			ray;
 	t_ray			sray;
 	t_ray			lray;
 	t_obj			*obj;
 	t_bg			bg;
-	t_viewport 		*vp;
-	t_alloc 		*allocations;
-	t_vector 		*vp_coord;
+	t_viewport		*vp;
+	t_alloc			*allocations;
+	t_vector		*vp_coord;
 	t_amb			ambient;
 	t_light			light;
 	double			move_x;

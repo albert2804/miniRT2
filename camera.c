@@ -6,13 +6,13 @@
 /*   By: arasal <arasal@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/17 17:22:25 by aestraic          #+#    #+#             */
-/*   Updated: 2023/05/31 23:06:40 by arasal           ###   ########.fr       */
+/*   Updated: 2023/05/31 23:40:46 by arasal           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "camera.h"
-#include "mem.h"
-#include "defines.h"
+#include "header/camera.h"
+#include "header/mem.h"
+#include "header/defines.h"
 
 /*
 calculates the distance in z-direction 
@@ -53,7 +53,8 @@ t_viewport	*viewport_coordinates(t_alloc *allocations)
 	return (vp);
 }
 
-t_vector	*viewport_coord_into_points(t_viewport vp, t_alloc *alloc, t_camera camera)
+t_vector	*viewport_coord_into_points(t_viewport vp, t_alloc *alloc, \
+t_camera camera)
 {
 	int			w;
 	int			h;

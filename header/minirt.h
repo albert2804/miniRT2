@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   minirt.h                                           :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: arasal <arasal@student.42heilbronn.de>     +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/05/31 23:20:56 by arasal            #+#    #+#             */
+/*   Updated: 2023/06/01 00:08:13 by arasal           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #ifndef MINIRT_H
 # define MINIRT_H
 
@@ -30,6 +42,15 @@ void	*free_s(char **str);
 int		ft_strcmp(const char *s1, const char *s2);
 
 void	ft_input(t_struct *rt, char **argv);
+void	create_light(t_struct *mrt, char **split);
+void	create_amb(t_struct *mrt, char **split);
+void	create_object(char **split, t_struct *mrt, int index);
+double	ft_atof(char *str);
+void	create_obj_plane(t_struct *mrt, char **split, int index);
+void	create_obj_sphere(t_struct *mrt, char **split, int index);
+void	create_obj_cylinder(t_struct *mrt, char **split, int index);
+void	create_camera(t_struct *mrt, char **split);
+void	ft_input(t_struct *mrt, char **argv);
 void	init_ray(t_ray *ray, int type);
 void	key_hook(void *param);
 void	key_hook2(void *param);

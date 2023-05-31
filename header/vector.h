@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   vector.h                                           :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: arasal <arasal@student.42heilbronn.de>     +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/05/31 23:21:20 by arasal            #+#    #+#             */
+/*   Updated: 2023/05/31 23:21:34 by arasal           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #ifndef VECTOR_H
 # define VECTOR_H
 
@@ -26,10 +38,10 @@ void		send_ray(t_ray *ray, t_vector p1, t_vector p2);
 void		send_shadowray(t_ray *sray, t_vector intersect_p, t_vector light_p);
 
 //put Light into mrt struct
-int 		hardshadows(t_ray *sray, t_ray *ray, int obj_index, t_struct *mrt);
+int			hardshadows(t_ray *sray, t_ray *ray, int obj_index, t_struct *mrt);
 void		print_vector(const char *str, t_vector a);
-void 		print_ray(const char *str, t_ray ray, double t);
+void		print_ray(const char *str, t_ray ray, double t);
 double		ft_midnight(double a, double b, double c);
 double		ft_midnight2(double a, double b, double c, t_cylinder *cylinder);
 
-# endif
+#endif

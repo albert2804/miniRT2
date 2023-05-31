@@ -6,11 +6,11 @@
 /*   By: arasal <arasal@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/23 17:34:14 by arasal            #+#    #+#             */
-/*   Updated: 2023/05/23 17:57:38 by arasal           ###   ########.fr       */
+/*   Updated: 2023/05/31 23:44:43 by arasal           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minirt.h"
+#include "header/minirt.h"
 
 int	ft_strcmp(const char *s1, const char *s2)
 {

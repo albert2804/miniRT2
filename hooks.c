@@ -6,11 +6,11 @@
 /*   By: arasal <arasal@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/07 12:11:40 by aestraic          #+#    #+#             */
-/*   Updated: 2023/05/31 22:19:59 by arasal           ###   ########.fr       */
+/*   Updated: 2023/05/31 23:41:32 by arasal           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <minirt.h>
+#include "header/minirt.h"
 
 void	key_hook(void *param)
 {
