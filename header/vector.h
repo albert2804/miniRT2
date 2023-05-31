@@ -26,8 +26,7 @@ void		send_ray(t_ray *ray, t_vector p1, t_vector p2);
 void		send_shadowray(t_ray *sray, t_vector intersect_p, t_vector light_p);
 
 //put Light into mrt struct
-void		make_hardshadows(t_ray *sray, t_ray *ray, int obj_index, t_struct *mrt);
-
+int 		hardshadows(t_ray *sray, t_ray *ray, int obj_index, t_struct *mrt);
 void		print_vector(const char *str, t_vector a);
 void 		print_ray(const char *str, t_ray ray, double t);
 double		ft_midnight(double a, double b, double c);

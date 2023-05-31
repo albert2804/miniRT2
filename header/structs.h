@@ -116,7 +116,7 @@ typedef struct s_amb
 typedef struct s_light
 {
 	t_vector	light_p;
-	double		brightness;
+	double		intensity;
 	t_color		color;
 }			t_light;
 

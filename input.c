@@ -6,7 +6,7 @@
 /*   By: aestraic <aestraic@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/09 17:02:27 by arasal            #+#    #+#             */
-/*   Updated: 2023/05/30 16:27:02 by aestraic         ###   ########.fr       */
+/*   Updated: 2023/05/31 15:10:51 by aestraic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -117,13 +117,13 @@ static void	create_obj_cylinder(t_struct *mrt, char **split, int index)
 //Light
 void create_light(t_struct *mrt)
 {
-	mrt->light.brightness = 1.0;
+	mrt->light.intensity = 1.0;
 	mrt->light.color.r = 1.0;
 	mrt->light.color.g = 1.0;
 	mrt->light.color.b = 1.0;
-	mrt->light.light_p.x = 0.0;
+	mrt->light.light_p.x = -5.0;
 	mrt->light.light_p.y = 0.0;
-	mrt->light.light_p.z = 2.0;
+	mrt->light.light_p.z = 0.0;
 }
 
 //Ambient Lighing

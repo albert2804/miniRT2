@@ -6,7 +6,7 @@
 /*   By: aestraic <aestraic@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/30 11:21:23 by aestraic          #+#    #+#             */
-/*   Updated: 2023/05/30 16:37:27 by aestraic         ###   ########.fr       */
+/*   Updated: 2023/05/31 15:09:50 by aestraic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,8 @@
 #include "vector.h"
 #include "camera.h"
 
+//flag to determine if the ray comes from camera position.
+//if flag == 0, the ray is an origin ray and goes through the viewport.
 void		send_ray(t_ray *ray, t_vector p1, t_vector p2)
 {
 	t_vector direction;
@@ -21,11 +23,14 @@ void		send_ray(t_ray *ray, t_vector p1, t_vector p2)
 	ray->viewport = p2;
 	ray->origin_p = p1;
 	direction = ft_substractv(p2, p1);
-	int angle = 20;
-	double angle_rad = angle / M_PI;
-	direction.x +=direction.x + sin(angle_rad) * (FOV / 40);
-	direction.y +=direction.y + 0.0;
-	// ray->direction = ft_normalized(direction);
+	// int angle_x = 0;
+	// int angle_y = 0;
+	// double angle_rad = angle_x / M_PI;
+	// double angle_rad_x = angle_x * M_PI / 180;
+	// double angle_rad_y = angle_y * M_PI / 180;
+	// direction.x += direction.x + sin(angle_rad_x) * (FOV / 40);
+	// direction.y += direction.y + (cos(M_PI_2 - angle_rad_y));
+	ray->direction = ft_normalized(direction);
 	ray->direction = direction;
 	ray->t = T_MAX;
 }
@@ -41,13 +46,21 @@ void		send_shadowray(t_ray *sray, t_vector intersect_p, t_vector light_p)
 	sray->t = 1;
 }
 
-void make_hardshadows(t_ray *sray, t_ray *ray, int obj_index, t_struct *mrt)
+/*
+returns 1, if the intersection point of the ray is in shadow
+returns 0, if in light.
+*/
+int hardshadows(t_ray *sray, t_ray *ray, int obj_index, t_struct *mrt)
 {
 	send_shadowray(sray, shadowray_start(mrt->obj, ray, obj_index), mrt->light.light_p);
 	if (ft_intersection(sray, mrt) > 0)
+	{
 		ray->rgb = paint_color(0,0,0);
+		return (1);
+	}	
 	else
 		paint_obj_color(ray, mrt->obj[obj_index]);
+	return (0);
 }
 
 //used for calculating a incremented offset value, to avoid shadow acne

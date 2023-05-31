@@ -6,7 +6,8 @@ TO-DO
 	ft_create_light(mrt)
 -Cylinder rendered correctly?
 -Camera orientation
--Escape Hook
+
+-calculate normalvectors for a plane and cylinders
 
 -check what is meant by
 	• When you change the resolution of the window, the content of the window must

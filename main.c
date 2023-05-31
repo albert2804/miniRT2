@@ -6,7 +6,7 @@
 /*   By: aestraic <aestraic@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/16 14:36:03 by aestraic          #+#    #+#             */
-/*   Updated: 2023/05/30 14:55:52 by aestraic         ###   ########.fr       */
+/*   Updated: 2023/05/31 14:27:16 by aestraic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -475,8 +475,10 @@ int	main(int argc, char **argv)
 	t_struct	mrt;
 	t_ray		ray;
 	t_ray		sray;
+	t_ray		lray;
 	int			i;
 	int 		obj_index;
+	int			in_shadow;
 
 	if (argc != 2)
 		return (1);
@@ -486,6 +488,7 @@ int	main(int argc, char **argv)
 	mlx_image_to_window(mrt.mlx, mrt.img, 0, 0);
 	i = 0;
 	obj_index = 0;
+	in_shadow = 0;
 	(void) sray;
 	while (i < (WIDTH * HEIGHT))
 	{
@@ -495,8 +498,13 @@ int	main(int argc, char **argv)
 			obj_index = ft_intersection(&ray, &mrt);
 			if (obj_index > 0)
 			{
-				make_hardshadows(&sray, &ray, obj_index, &mrt);
+				in_shadow = hardshadows(&sray, &ray, obj_index, &mrt);
 				ambient_light(&ray, &mrt);
+				if (in_shadow == 0)
+				{
+					send_ray(&lray, mrt.light.light_p, ft_calculate_point(ray, ray.t));
+					diffuse_lighting(&ray, &lray, obj_index, &mrt);
+				}
 			}
 			else
 				paint_obj_color(&ray, mrt.obj[0]);
