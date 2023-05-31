@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   draw.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aestraic <aestraic@student.42.fr>          +#+  +:+       +#+        */
+/*   By: arasal <arasal@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/22 18:10:46 by aestraic          #+#    #+#             */
-/*   Updated: 2023/05/31 20:36:53 by aestraic         ###   ########.fr       */
+/*   Updated: 2023/05/31 22:14:36 by arasal           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,16 +17,16 @@ int	get_rgba(int r, int g, int b, int a)
 	return (r << 24 | g << 16 | b << 8 | a);
 }
 
-void	place_pixel(t_ray *ray, mlx_image_t *img)
+void	place_pixel(t_ray *ray, mlx_image_t *img, t_camera camera)
 {
 	int			color;
 	uint32_t	x;
 	uint32_t	y;
 
 	color = get_rgba(ray->rgb.r * R, ray->rgb.g * G, ray->rgb.b * B, 255);
-	x = (float)(((ray->viewport.x)* ((float)WIDTH / (float)V_W)) + \
+	x = (float)(((ray->viewport.x + camera.view_p.x) * ((float)WIDTH / (float)V_W)) + \
 	((float)WIDTH / 2));
-	y = (float)(((-ray->viewport.y) * ((float)HEIGHT / (float)V_H)) + \
+	y = (float)((-(ray->viewport.y - camera.view_p.y) * ((float)HEIGHT / (float)V_H)) + \
 	((float)HEIGHT / 2));
 	ft_putpixel(x, y, color, img);
 }

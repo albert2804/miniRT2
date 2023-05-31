@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   input.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aestraic <aestraic@student.42.fr>          +#+  +:+       +#+        */
+/*   By: arasal <arasal@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/09 17:02:27 by arasal            #+#    #+#             */
-/*   Updated: 2023/05/31 21:16:16 by aestraic         ###   ########.fr       */
+/*   Updated: 2023/05/31 22:21:13 by arasal           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -121,8 +121,8 @@ static void	create_camera(t_struct *mrt, char **split)
 
 	camera = ft_calloc(sizeof(t_camera), 1);
 	split2 = ft_split(split[1], ',');
-	camera->view_p.x = ft_atof(split2[0]) * (-1);
-	camera->view_p.y = ft_atof(split2[1]) * (-1);
+	camera->view_p.x = ft_atof(split2[0]);
+	camera->view_p.y = ft_atof(split2[1]);
 	camera->view_p.z = ft_atof(split2[2]);
 	free_s(split2);
 	split2 = ft_split(split[2], ',');

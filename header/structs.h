@@ -140,7 +140,9 @@ typedef struct s_struct
 	mlx_image_t		*img;
 	t_vector		zero;
 	t_camera		*camera;
-	t_ray			*ray;
+	t_ray			ray;
+	t_ray			sray;
+	t_ray			lray;
 	t_obj			*obj;
 	t_bg			bg;
 	t_viewport 		*vp;
@@ -148,6 +150,8 @@ typedef struct s_struct
 	t_vector 		*vp_coord;
 	t_amb			ambient;
 	t_light			light;
+	double			move_x;
+	double			move_y;
 }			t_struct;
 
 #endif

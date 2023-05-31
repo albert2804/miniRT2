@@ -16,6 +16,7 @@ SRC = 	main.c\
 		shadows.c\
 		light.c\
 		test.c\
+		hooks.c\
 		get_next_line_bonus.c\
 		get_next_line_utils_bonus.c
 

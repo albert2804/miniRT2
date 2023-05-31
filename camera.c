@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   camera.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aestraic <aestraic@student.42.fr>          +#+  +:+       +#+        */
+/*   By: arasal <arasal@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/17 17:22:25 by aestraic          #+#    #+#             */
-/*   Updated: 2023/05/31 21:42:33 by aestraic         ###   ########.fr       */
+/*   Updated: 2023/05/31 22:16:19 by arasal           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ t_viewport	*viewport_coordinates(t_alloc *allocations)
 	return (vp);
 }
 
-t_vector	*viewport_coord_into_points(t_viewport vp, t_alloc *alloc)
+t_vector	*viewport_coord_into_points(t_viewport vp, t_alloc *alloc, t_camera camera)
 {
 	int			w;
 	int			h;
@@ -70,9 +70,9 @@ t_vector	*viewport_coord_into_points(t_viewport vp, t_alloc *alloc)
 		w = 0;
 		while (w < WIDTH)
 		{
-			points[i].x = vp.x[w];
-			points[i].y = vp.y[h];
-			points[i].z = vp.distance - 10;
+			points[i].x = vp.x[w] + camera.view_p.x;
+			points[i].y = vp.y[h] + camera.view_p.y;
+			points[i].z = vp.distance + camera.view_p.z;
 			i++;
 			w++;
 		}
