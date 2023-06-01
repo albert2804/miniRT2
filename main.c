@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: arasal <arasal@student.42heilbronn.de>     +#+  +:+       +#+        */
+/*   By: aestraic <aestraic@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/16 14:36:03 by aestraic          #+#    #+#             */
-/*   Updated: 2023/06/01 00:14:39 by arasal           ###   ########.fr       */
+/*   Updated: 2023/06/01 13:37:55 by aestraic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,6 +105,7 @@ int	main(int argc, char **argv)
 	ft_init(&mrt, argv);
 	init_ray(&mrt.ray, 0);
 	init_ray(&mrt.sray, 1);
+	init_ray(&mrt.lray, 0);
 	draw_image(&mrt);
 	mlx_loop_hook(mrt.mlx, &key_hook, (void *)&mrt);
 	mlx_loop_hook(mrt.mlx, &key_hook2, (void *)&mrt);
